@@ -5,6 +5,7 @@ import javax.swing.SwingUtilities;
 
 /**
  * The main class for the application.
+ * @author nrsmac
  */
 public class Asteroids
 {
