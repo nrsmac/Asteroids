@@ -33,7 +33,7 @@ public class Ship extends Participant implements AsteroidDestroyer
 
         Path2D.Double poly = new Path2D.Double();
         poly.moveTo(21, 0);
-        poly.lineTo(-21, 12);
+        poly.moveTo(-21, 12);
         poly.lineTo(-14, 10);
         poly.lineTo(-14, -10);
         poly.lineTo(-21, -12);

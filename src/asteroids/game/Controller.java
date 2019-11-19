@@ -6,6 +6,7 @@ import java.util.Iterator;
 import javax.swing.*;
 import asteroids.participants.Asteroid;
 import asteroids.participants.Bullet;
+import asteroids.participants.Mine;
 import asteroids.participants.Ship;
 
 /**
@@ -83,7 +84,7 @@ public class Controller implements KeyListener, ActionListener, Iterable<Partici
     {
         // Clear the screen, reset the level, and display the legend
         clear();
-        display.setLegend("Asteroids");
+        display.setLegend("huh?");
 
         // Place four asteroids near the corners of the screen.
         placeAsteroids();
@@ -115,10 +116,18 @@ public class Controller implements KeyListener, ActionListener, Iterable<Partici
      */
     private void placeAsteroids ()
     {
-        addParticipant(new Asteroid(0, 2, EDGE_OFFSET, EDGE_OFFSET, 3, this));
-        addParticipant(new Asteroid(1, 2, -EDGE_OFFSET, EDGE_OFFSET, 3, this));
-        addParticipant(new Asteroid(2, 2, EDGE_OFFSET, -EDGE_OFFSET, 3, this));
-        addParticipant(new Asteroid(3, 2, -EDGE_OFFSET, -EDGE_OFFSET, 3, this));
+        addParticipant(new Asteroid(2, 1, EDGE_OFFSET, EDGE_OFFSET, 3, this));
+        addParticipant(new Asteroid(2, 0, -EDGE_OFFSET, EDGE_OFFSET, 3, this));
+
+    }
+    
+    /**
+     * Place mines
+     */
+    private void placeMine ()
+    {
+        // Place a new mine
+        addParticipant(new Mine());
     }
 
     /**
@@ -144,6 +153,9 @@ public class Controller implements KeyListener, ActionListener, Iterable<Partici
 
         // Place the ship
         placeShip();
+        
+        //place the mine
+        placeMine();
 
         // Reset statistics
         lives = 1;
