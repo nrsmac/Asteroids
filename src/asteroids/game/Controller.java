@@ -115,6 +115,7 @@ public class Controller implements KeyListener, ActionListener, Iterable<Partici
     private void placeAsteroids ()
     {
         addParticipant(new Asteroid(0, 2, EDGE_OFFSET, EDGE_OFFSET, 3, this));
+        //TODO: Place 3 more asteroids
     }
 
     /**

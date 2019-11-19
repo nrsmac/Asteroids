@@ -1,0 +1,11 @@
+bangLarge
+bangMedium
+bangSmall
+bangShip
+bangAlienShip
+beat1
+beat2
+fire
+saucerBig
+saucerSmall
+thrust

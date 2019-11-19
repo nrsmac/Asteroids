@@ -75,6 +75,7 @@ public class Ship extends Participant implements AsteroidDestroyer
     {
         applyFriction(SHIP_FRICTION);
         super.move();
+        //TODO: Animate flame behind ship
     }
 
     /**
@@ -104,6 +105,9 @@ public class Ship extends Participant implements AsteroidDestroyer
     /**
      * When a Ship collides with a ShipDestroyer, it expires
      */
+    
+    //TODO: Add left and right controls
+    
     @Override
     public void collidedWith (Participant p)
     {
@@ -131,4 +135,9 @@ public class Ship extends Participant implements AsteroidDestroyer
             new ParticipantCountdownTimer(this, "move", 200);
         }
     }
+    
+    //TODO: Fire Bullets
+    /*
+     * Maybe make a bullet class in destroyers? 
+     */
 }
