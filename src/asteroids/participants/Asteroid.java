@@ -145,20 +145,11 @@ public class Asteroid extends Participant implements ShipDestroyer {
 	public void collidedWith(Participant p) {
 		if (p instanceof AsteroidDestroyer) {
 			// Expire the asteroid
-			
 
 			Participant.expire(this);
 
-			// TODO: Collision functionality
-			/*
-			 * When a large asteroid collides with a bullet or a ship, the
-			 * asteroid splits into two medium asteroids. When a medium asteroid
-			 * collides, it splits into two small asteroids. When a small
-			 * asteroid collides, it disappears.
-			 */
-
 			// Inform the controller
-			controller.asteroidDestroyed();
+			controller.asteroidDestroyed(this);
 		}
 	}
 
