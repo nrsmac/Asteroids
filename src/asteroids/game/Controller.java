@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.util.Iterator;
 import javax.swing.*;
 import asteroids.participants.Asteroid;
+import asteroids.participants.Bullet;
 import asteroids.participants.Ship;
 
 /**
@@ -138,7 +139,7 @@ public class Controller implements KeyListener, ActionListener, Iterable<Partici
         // Clear the screen
         clear();
 
-        // Plac asteroids
+        // Place asteroids
         placeAsteroids();
 
         // Place the ship
@@ -185,7 +186,7 @@ public class Controller implements KeyListener, ActionListener, Iterable<Partici
      * An asteroid has been destroyed
      */
     public void asteroidDestroyed ()
-    {
+    { 
         // If all the asteroids are gone, schedule a transition
         if (countAsteroids() == 0)
         {
@@ -277,6 +278,12 @@ public class Controller implements KeyListener, ActionListener, Iterable<Partici
         if (e.getKeyCode() == KeyEvent.VK_LEFT && ship != null)
         {
             ship.turnLeft();
+        }//If space, fire bullet
+        if (e.getKeyCode() == KeyEvent.VK_SPACE && ship != null)
+        {
+        	Bullet bullet = new Bullet(ship, this);
+            addParticipant(bullet);
+            System.out.println("Fire!");
         }
     }
 

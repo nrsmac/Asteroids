@@ -141,6 +141,10 @@ public class Ship extends Participant implements AsteroidDestroyer
             new ParticipantCountdownTimer(this, "move", 200);
         }
     }
+
+	public void fireBullet() {
+		Bullet bullet = new Bullet(this, controller);
+	}
     
     //TODO: Fire Bullets
     /*
