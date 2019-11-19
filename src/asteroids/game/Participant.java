@@ -191,6 +191,7 @@ public abstract class Participant
         // Compute new speeds
         speedX += delta * Math.cos(rotation);
         speedY += delta * Math.sin(rotation);
+//        animateFlame();
 
         // Enforce the speed limit
         if (getSpeed() > SPEED_LIMIT)

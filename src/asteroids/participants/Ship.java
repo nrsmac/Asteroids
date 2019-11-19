@@ -15,6 +15,9 @@ public class Ship extends Participant implements AsteroidDestroyer
 {
     /** The outline of the ship */
     private Shape outline;
+    
+    /** The outline of the flame */
+    private Shape flame;
 
     /** Game controller */
     private Controller controller;
@@ -75,7 +78,7 @@ public class Ship extends Participant implements AsteroidDestroyer
     {
         applyFriction(SHIP_FRICTION);
         super.move();
-        //TODO: Animate flame behind ship
+//        TODO: Animate flame behind ship
     }
 
     /**
@@ -100,13 +103,16 @@ public class Ship extends Participant implements AsteroidDestroyer
     public void accelerate ()
     {
         accelerate(SHIP_ACCELERATION);
+      //TODO: Add flame animation
+        
     }
 
     /**
      * When a Ship collides with a ShipDestroyer, it expires
      */
     
-    //TODO: Add left and right controls
+    //TODO: Add left, right and acceleration controls
+    
     
     @Override
     public void collidedWith (Participant p)

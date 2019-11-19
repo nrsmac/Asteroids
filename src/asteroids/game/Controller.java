@@ -274,6 +274,10 @@ public class Controller implements KeyListener, ActionListener, Iterable<Partici
         {
             ship.turnRight();
         }
+        if (e.getKeyCode() == KeyEvent.VK_LEFT && ship != null)
+        {
+            ship.turnLeft();
+        }
     }
 
     @Override
