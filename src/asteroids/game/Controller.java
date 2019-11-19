@@ -110,12 +110,14 @@ public class Controller implements KeyListener, ActionListener, Iterable<Partici
     }
 
     /**
-     * Places an asteroid near one corner of the screen. Gives it a random velocity and rotation.
+     * Places 4 asteroids near corners of the screen. Gives them a random velocity and rotation.
      */
     private void placeAsteroids ()
     {
         addParticipant(new Asteroid(0, 2, EDGE_OFFSET, EDGE_OFFSET, 3, this));
-        //TODO: Place 3 more asteroids
+        addParticipant(new Asteroid(1, 2, -EDGE_OFFSET, EDGE_OFFSET, 3, this));
+        addParticipant(new Asteroid(2, 2, EDGE_OFFSET, -EDGE_OFFSET, 3, this));
+        addParticipant(new Asteroid(3, 2, -EDGE_OFFSET, -EDGE_OFFSET, 3, this));
     }
 
     /**

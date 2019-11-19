@@ -5,4 +5,5 @@ package asteroids.destroyers;
  */
 public interface ShipDestroyer
 {
+	
 }
