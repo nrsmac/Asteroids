@@ -28,9 +28,15 @@ public class Bullet extends Participant implements AsteroidDestroyer {
 
 		Path2D.Double poly = new Path2D.Double();
 		poly.moveTo(ship.getXNose(), ship.getYNose() + 1);
+<<<<<<< Updated upstream
 		poly.lineTo(ship.getXNose(), ship.getYNose() + 4);
 		poly.lineTo(ship.getXNose() - 4, ship.getYNose());
 		poly.lineTo(ship.getXNose() + 4, ship.getYNose());
+=======
+		poly.lineTo(ship.getXNose(), ship.getYNose() + 2);
+		poly.lineTo(ship.getXNose(), ship.getYNose() + 70);
+		poly.lineTo(ship.getXNose()+22, ship.getYNose() + 34);
+>>>>>>> Stashed changes
 		poly.closePath();
 		outline = poly;
 
@@ -48,8 +54,13 @@ public class Bullet extends Participant implements AsteroidDestroyer {
 		if (p instanceof AsteroidDestroyer) {
 			// Expire the bullet from the game
 			Participant.expire(this);
+<<<<<<< Updated upstream
 
 			// Tell the controller the asteroid was destroyed
+=======
+			
+			// Tell the controller the ship was destroyed
+>>>>>>> Stashed changes
 			controller.asteroidDestroyed();
 		}
 
