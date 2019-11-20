@@ -1,7 +1,12 @@
 package asteroids.participants;
 
+import static asteroids.game.Constants.RANDOM;
+import static asteroids.game.Constants.SIZE;
+
 import java.awt.Shape;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
+import java.awt.geom.Rectangle2D;
 
 import asteroids.destroyers.AsteroidDestroyer;
 import asteroids.game.Controller;
@@ -19,17 +24,18 @@ public class Bullet extends Participant implements AsteroidDestroyer {
 		this.controller = controller;
 		setPosition(ship.getXNose(), ship.getYNose());
 		setRotation(ship.getDirection());
+		setVelocity(50, ship.getDirection());
 
 		Path2D.Double poly = new Path2D.Double();
 		poly.moveTo(ship.getXNose(), ship.getYNose() + 1);
-		poly.moveTo(ship.getXNose(), ship.getYNose() + 2);
-		poly.moveTo(ship.getXNose(), ship.getYNose() + 70);
-		poly.moveTo(ship.getXNose()+22, ship.getYNose() + 34);
+		poly.lineTo(ship.getXNose(), ship.getYNose() + 4);
+		poly.lineTo(ship.getXNose() - 4, ship.getYNose());
+		poly.lineTo(ship.getXNose() + 4, ship.getYNose());
 		poly.closePath();
 		outline = poly;
 
-		// Schedule an acceleration in two seconds
-		new ParticipantCountdownTimer(this, "move", 100);
+		// // Schedule an acceleration in two seconds
+		// new ParticipantCountdownTimer(this, "move", 100);
 	}
 
 	@Override
@@ -43,9 +49,11 @@ public class Bullet extends Participant implements AsteroidDestroyer {
 			// Expire the bullet from the game
 			Participant.expire(this);
 
-			// Tell the controller the ship was destroyed
-			controller.shipDestroyed();
+			// Tell the controller the asteroid was destroyed
+			controller.asteroidDestroyed();
 		}
 
 	}
+
+
 }

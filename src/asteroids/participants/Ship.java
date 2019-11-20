@@ -142,12 +142,4 @@ public class Ship extends Participant implements AsteroidDestroyer
         }
     }
 
-	public void fireBullet() {
-		Bullet bullet = new Bullet(this, controller);
-	}
-    
-    //TODO: Fire Bullets
-    /*
-     * Maybe make a bullet class in destroyers? 
-     */
 }

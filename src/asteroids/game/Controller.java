@@ -96,6 +96,14 @@ public class Controller
 		display.setLegend(GAME_OVER);
 		display.removeKeyListener(this);
 	}
+	
+	//Shoots bullets
+	private void shootBullet() {
+		Bullet bullet = new Bullet(ship, this);
+		bullet.setPosition(ship.getXNose(), ship.getYNose());
+		addParticipant(bullet);
+//		TODO:Why am i creating multiple bullets?
+	}
 
 	/**
 	 * Place a new ship in the center of the screen. Remove any existing ship
@@ -209,6 +217,15 @@ public class Controller
         }
     }
 
+    public void asteroidDestroyed ()
+    { 
+        // If all the asteroids are gone, schedule a transition
+        if (countAsteroids() == 0)
+        {
+            scheduleTransition(END_DELAY);
+        }
+    }
+
 	/**
 	 * Schedules a transition m msecs in the future
 	 */
@@ -282,9 +299,7 @@ public class Controller
 			ship.turnLeft();
 		} // If space, fire bullet
 		if (e.getKeyCode() == KeyEvent.VK_SPACE && ship != null) {
-			Bullet bullet = new Bullet(ship, this);
-			addParticipant(bullet);
-			System.out.println("Fire!");
+			shootBullet();
 		}
 	}
 
