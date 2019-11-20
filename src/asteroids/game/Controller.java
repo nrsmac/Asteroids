@@ -216,6 +216,15 @@ public class Controller
         	addParticipant(new Asteroid(2, 0, asteroid.getX(), asteroid.getY(), 3, this));
         }
     }
+    
+    public void asteroidDestroyed ()
+    { 
+        // If all the asteroids are gone, schedule a transition
+        if (countAsteroids() == 0)
+        {
+            scheduleTransition(END_DELAY);
+        }
+    }
 
     public void asteroidDestroyed ()
     { 
