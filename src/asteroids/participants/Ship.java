@@ -15,9 +15,6 @@ public class Ship extends Participant implements AsteroidDestroyer
 {
     /** The outline of the ship */
     private Shape outline;
-    
-    /** The outline of the flame */
-    private Shape flame;
 
     /** Game controller */
     private Controller controller;
@@ -103,8 +100,39 @@ public class Ship extends Participant implements AsteroidDestroyer
     public void accelerate ()
     {
         accelerate(SHIP_ACCELERATION);
-      //TODO: Add flame animation
-        
+    }
+    
+    /**
+     * Draws the flame tail from the rocket when the up key is pressed
+     */
+    public void drawFlame()
+    {
+    	Path2D.Double poly = new Path2D.Double();
+        poly.moveTo(21, 0);
+        poly.lineTo(-21, 12);
+        poly.lineTo(-14, 10);
+        poly.lineTo(-14, -10);
+        //the flame
+        poly.lineTo(-14, 6);
+        poly.lineTo(-25, 0);
+        poly.lineTo(-14, -6);
+        //end flame
+        poly.lineTo(-14, -10);
+        poly.lineTo(-21, -12);
+        poly.closePath();
+        outline = poly;
+    }
+    
+    public void undrawFlame()
+    {
+    	Path2D.Double poly = new Path2D.Double();
+        poly.moveTo(21, 0);
+        poly.lineTo(-21, 12);
+        poly.lineTo(-14, 10);
+        poly.lineTo(-14, -10);
+        poly.lineTo(-21, -12);
+        poly.closePath();
+        outline = poly;
     }
 
     /**
