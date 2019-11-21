@@ -311,7 +311,7 @@ public class Controller
 		}
 		return count;
 	}
-
+	
 	/**
 	 * If a key of interest is pressed, record that it is down.
 	 */
@@ -332,6 +332,10 @@ public class Controller
 				shootBullet();
 			}
 		}
+		if (e.getKeyCode() == KeyEvent.VK_UP && ship != null)
+		{
+			ship.drawFlame();
+		}
 	}
 
 	@Override
@@ -340,6 +344,9 @@ public class Controller
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_UP && ship != null)
+		{
+			ship.undrawFlame();
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT && ship != null) {
 			turningRight = false;
 		}
