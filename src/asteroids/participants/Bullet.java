@@ -3,8 +3,6 @@ package asteroids.participants;
 import java.awt.Shape;
 import java.awt.geom.Path2D;
 import asteroids.destroyers.AsteroidDestroyer;
-import asteroids.destroyers.ShipDestroyer;
-import asteroids.game.Constants;
 import asteroids.game.Controller;
 import asteroids.game.Participant;
 import asteroids.game.ParticipantCountdownTimer;
@@ -31,7 +29,7 @@ public class Bullet extends Participant implements AsteroidDestroyer {
 		this.controller = controller;
 		// setPosition(ship.getXNose(), ship.getYNose());
 
-		setVelocity(Constants.BULLET_SPEED, ship.getRotation());
+		setVelocity(6, ship.getRotation());
 		poly.closePath();
 		
 		// // Schedule an acceleration in two seconds
@@ -46,11 +44,11 @@ public class Bullet extends Participant implements AsteroidDestroyer {
 
 	@Override
 	public void collidedWith(Participant p) {
-		if (p instanceof ShipDestroyer) {
+		if (p instanceof AsteroidDestroyer) {
 			// Expire the bullet from the game
 			Participant.expire(this);
 			// Tell the controller the asteroid was destroyed
-//			controller.asteroidDestroyed();
+			controller.asteroidDestroyed();
 		}
 	}
 

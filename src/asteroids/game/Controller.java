@@ -312,7 +312,7 @@ public class Controller
 			ship.turnLeft();
 		} // If space, fire bullet
 		if (e.getKeyCode() == KeyEvent.VK_SPACE && ship != null) {
-			if (countBullets() < Constants.BULLET_LIMIT) {
+			if (countBullets() < 9) {
 				shootBullet();
 			}
 		}
