@@ -21,9 +21,11 @@ public class Controller
 
 	/** The ship (if one is active) or null (otherwise) */
 	private Ship ship;
+	
 
 	/** When this timer goes off, it is time to refresh the animation */
 	private Timer refreshTimer;
+	
 
 	/**
 	 * The time at which a transition to a new stage of the game should be made.
@@ -99,10 +101,7 @@ public class Controller
 	
 	//Shoots bullets
 	private void shootBullet() {
-		Bullet bullet = new Bullet(ship, this);
-		bullet.setPosition(ship.getXNose(), ship.getYNose());
-		addParticipant(bullet);
-//		TODO:Why am i creating multiple bullets?
+		addParticipant(new Bullet(ship, this));
 	}
 
 	/**
@@ -287,6 +286,19 @@ public class Controller
 		}
 		return count;
 	}
+	
+	/**
+	 * Returns the number of asteroids that are active participants
+	 */
+	private int countBullets() {
+		int count = 0;
+		for (Participant p : this) {
+			if (p instanceof Bullet) {
+				count++;
+			}
+		}
+		return count;
+	}
 
 	/**
 	 * If a key of interest is pressed, record that it is down.
@@ -300,7 +312,9 @@ public class Controller
 			ship.turnLeft();
 		} // If space, fire bullet
 		if (e.getKeyCode() == KeyEvent.VK_SPACE && ship != null) {
-			shootBullet();
+			if (countBullets() < 9) {
+				shootBullet();
+			}
 		}
 	}
 

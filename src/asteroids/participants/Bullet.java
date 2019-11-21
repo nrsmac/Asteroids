@@ -1,13 +1,7 @@
 package asteroids.participants;
 
-import static asteroids.game.Constants.RANDOM;
-import static asteroids.game.Constants.SIZE;
-
 import java.awt.Shape;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
-import java.awt.geom.Rectangle2D;
-
 import asteroids.destroyers.AsteroidDestroyer;
 import asteroids.game.Controller;
 import asteroids.game.Participant;
@@ -21,21 +15,26 @@ public class Bullet extends Participant implements AsteroidDestroyer {
 	private Shape outline;
 
 	public Bullet(Ship ship, Controller controller) {
-		this.controller = controller;
-		setPosition(ship.getXNose(), ship.getYNose());
-		setRotation(ship.getDirection());
-		setVelocity(50, ship.getDirection());
 
 		Path2D.Double poly = new Path2D.Double();
-		poly.moveTo(ship.getXNose(), ship.getYNose() + 1);
-		poly.lineTo(ship.getXNose(), ship.getYNose() + 4);
-		poly.lineTo(ship.getXNose() - 4, ship.getYNose());
-		poly.lineTo(ship.getXNose() + 4, ship.getYNose());
-		poly.closePath();
+		poly.moveTo(ship.getXNose(), ship.getYNose());
+		poly.lineTo(ship.getXNose(), ship.getYNose() + 1);
+		poly.lineTo(ship.getXNose(), ship.getYNose() - 2);
+		poly.moveTo(ship.getXNose(), ship.getYNose());
+		poly.lineTo(ship.getXNose() - 1, ship.getYNose());
+		poly.lineTo(ship.getXNose() + 2, ship.getYNose());
+		poly.lineTo(ship.getXNose(), ship.getYNose());
 		outline = poly;
 
+		this.controller = controller;
+		// setPosition(ship.getXNose(), ship.getYNose());
+
+		setVelocity(6, ship.getRotation());
+		poly.closePath();
+		
 		// // Schedule an acceleration in two seconds
 		// new ParticipantCountdownTimer(this, "move", 100);
+		new ParticipantCountdownTimer(this, "shoot", 100);
 	}
 
 	@Override
@@ -48,13 +47,14 @@ public class Bullet extends Participant implements AsteroidDestroyer {
 		if (p instanceof AsteroidDestroyer) {
 			// Expire the bullet from the game
 			Participant.expire(this);
-
 			// Tell the controller the asteroid was destroyed
-
 			controller.asteroidDestroyed();
 		}
-
 	}
 
+	@Override
+	public void countdownComplete(Object payload) {
+
+	}
 
 }

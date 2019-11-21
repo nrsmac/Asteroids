@@ -285,34 +285,39 @@ public abstract class Participant
 
         // If the element has gone sufficiently far out of bounds, move it to
         // the other side of the screen. This change will take effect next time.
+        //Expire Bullet when it goes off the screen
         Rectangle2D bounds = border.getBounds2D();
         if (bounds.getMaxX() < 0)
         {
-            x += SIZE + (bounds.getMaxX() - bounds.getMinX());
             if (this instanceof Bullet) {
             	expire(this);
             }
+            x += SIZE + (bounds.getMaxX() - bounds.getMinX());
+  
         }
         if (bounds.getMinX() >= SIZE)
         {
-            x += -SIZE - (bounds.getMaxX() - bounds.getMinX());
-            if (this instanceof Bullet) {
+        	if (this instanceof Bullet) {
             	expire(this);
             }
+            x += -SIZE - (bounds.getMaxX() - bounds.getMinX());
+            
         }
         if (bounds.getMaxY() < 0)
         {
-            y += SIZE + (bounds.getMaxY() - bounds.getMinY());
-            if (this instanceof Bullet) {
+        	if (this instanceof Bullet) {
             	expire(this);
             }
+            y += SIZE + (bounds.getMaxY() - bounds.getMinY());
+            
         }
         if (bounds.getMinY() >= SIZE)
         {
-            y += -SIZE - (bounds.getMaxY() - bounds.getMinY());
-            if (this instanceof Bullet) {
+        	if (this instanceof Bullet) {
             	expire(this);
             }
+            y += -SIZE - (bounds.getMaxY() - bounds.getMinY());
+            
         }
     }
 
