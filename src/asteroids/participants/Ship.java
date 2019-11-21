@@ -38,7 +38,7 @@ public class Ship extends Participant implements AsteroidDestroyer
         outline = poly;
 
         // Schedule an acceleration in two seconds
-        new ParticipantCountdownTimer(this, "move", 2000);
+//        new ParticipantCountdownTimer(this, "move", 2000);
     }
 
     /**
@@ -165,8 +165,8 @@ public class Ship extends Participant implements AsteroidDestroyer
         // burst for 200 msecs from now.
         if (payload.equals("move"))
         {
-            accelerate();
-            new ParticipantCountdownTimer(this, "move", 200);
+//            accelerate();
+//            new ParticipantCountdownTimer(this, "move", 200);
         }
     }
 
