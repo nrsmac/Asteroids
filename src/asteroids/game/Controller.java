@@ -260,11 +260,11 @@ public class Controller
 		}
 
 		// Turning logic
-		if (turningRight && ship!=null) {
+		if (turningRight && ship != null) {
 			ship.turnRight();
 		}
 
-		if (turningLeft && ship!=null) {
+		if (turningLeft && ship != null) {
 			ship.turnLeft();
 		}
 	}
@@ -311,7 +311,7 @@ public class Controller
 		}
 		return count;
 	}
-	
+
 	/**
 	 * If a key of interest is pressed, record that it is down.
 	 */
@@ -321,7 +321,6 @@ public class Controller
 			turningRight = true;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_LEFT && ship != null) {
-			ship.turnLeft();
 			turningLeft = true;
 		} // If space, fire bullet
 		if (e.getKeyCode() == KeyEvent.VK_UP && ship != null) {
@@ -332,8 +331,7 @@ public class Controller
 				shootBullet();
 			}
 		}
-		if (e.getKeyCode() == KeyEvent.VK_UP && ship != null)
-		{
+		if (e.getKeyCode() == KeyEvent.VK_UP && ship != null) {
 			ship.drawFlame();
 		}
 	}
@@ -344,12 +342,14 @@ public class Controller
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_UP && ship != null)
-		{
+		if (e.getKeyCode() == KeyEvent.VK_UP && ship != null) {
 			ship.undrawFlame();
+		}
+		
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT && ship != null) {
 			turningRight = false;
 		}
+		
 		if (e.getKeyCode() == KeyEvent.VK_LEFT && ship != null) {
 			ship.turnLeft();
 			turningLeft = false;

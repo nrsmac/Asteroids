@@ -39,3 +39,8 @@ doc/sounds/class-use/SoundDemo 2.html
 src/sounds/package-info 2.java
 doc
 bin
+bin/asteroids/participants/Asteroid.class
+bin/asteroids/participants/Ship.class
+bin/asteroids/participants/Ship.class
+bin/asteroids/participants/Asteroid.class
+bin/asteroids/game/Controller.class
