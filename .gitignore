@@ -2,3 +2,40 @@
 .DS_Store
 .classpath
 .project
+doc/asteroids/destroyers/class-use/AsteroidDestroyer 2.html
+doc/asteroids/destroyers/class-use/ShipDestroyer 2.html
+doc/asteroids/game/class-use/Asteroids 2.html
+doc/asteroids/game/class-use/Constants 2.html
+doc/asteroids/game/class-use/Controller 2.html
+doc/asteroids/game/class-use/Display 2.html
+doc/asteroids/game/class-use/Participant 2.html
+doc/asteroids/game/class-use/ParticipantCountdownTimer 2.html
+doc/asteroids/game/class-use/ParticipantState 2.html
+doc/asteroids/game/class-use/Screen 2.html
+doc/asteroids/game/Constants 2.html
+doc/asteroids/game/package-tree 2.html
+doc/asteroids/game/Screen 2.html
+doc/asteroids/participants/class-use/Asteroid 2.html
+doc/asteroids/participants/class-use/Ship 2.html
+doc/jquery/external/jquery/jquery 2.js
+doc/jquery/images/ui-bg_glass_55_fbf9ee_1x400 2.png
+doc/jquery/images/ui-bg_glass_65_dadada_1x400 2.png
+doc/jquery/images/ui-bg_glass_75_dadada_1x400 2.png
+doc/jquery/images/ui-bg_glass_75_e6e6e6_1x400 2.png
+doc/jquery/images/ui-bg_glass_95_fef1ec_1x400 2.png
+doc/jquery/images/ui-bg_highlight-soft_75_cccccc_1x100 2.png
+doc/jquery/images/ui-icons_222222_256x240 2.png
+doc/jquery/images/ui-icons_2e83ff_256x240 2.png
+doc/jquery/images/ui-icons_454545_256x240 2.png
+doc/jquery/images/ui-icons_888888_256x240 2.png
+doc/jquery/images/ui-icons_cd0a0a_256x240 2.png
+doc/jquery/jszip-utils/dist/jszip-utils 2.js
+doc/jquery/jszip-utils/dist/jszip-utils-ie 2.js
+doc/jquery/jszip-utils/dist/jszip-utils-ie.min 2.js
+doc/jquery/jszip-utils/dist/jszip-utils.min 2.js
+doc/jquery/jszip/dist/jszip 2.js
+doc/jquery/jszip/dist/jszip.min 2.js
+doc/sounds/class-use/SoundDemo 2.html
+src/sounds/package-info 2.java
+doc
+bin
