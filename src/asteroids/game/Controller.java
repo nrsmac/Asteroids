@@ -21,11 +21,9 @@ public class Controller
 
 	/** The ship (if one is active) or null (otherwise) */
 	private Ship ship;
-	
 
 	/** When this timer goes off, it is time to refresh the animation */
 	private Timer refreshTimer;
-	
 
 	/**
 	 * The time at which a transition to a new stage of the game should be made.
@@ -40,6 +38,12 @@ public class Controller
 
 	/** The game display */
 	private Display display;
+
+	/** Turning right */
+	boolean turningRight = false;
+
+	/** Turning left */
+	boolean turningLeft = false;
 
 	/**
 	 * Constructs a controller to coordinate the game and screen
@@ -98,8 +102,8 @@ public class Controller
 		display.setLegend(GAME_OVER);
 		display.removeKeyListener(this);
 	}
-	
-	//Shoots bullets
+
+	// Shoots bullets
 	private void shootBullet() {
 		addParticipant(new Bullet(ship, this));
 	}
@@ -188,43 +192,42 @@ public class Controller
 	}
 
 	/**
-     * An asteroid has been destroyed
-     */
-    public void asteroidDestroyed (Asteroid asteroid)
-    { 
-        // If all the asteroids are gone, schedule a transition
-        if (countAsteroids() == 0)
-        {
-            scheduleTransition(END_DELAY);
-        }
-        
-     //Asteroid split functionality
-     			/*
-     			 * When a large asteroid collides with a bullet or a ship, the
-     			 * asteroid splits into two medium (1) asteroids. When a medium asteroid
-     			 * collides, it splits into two small (0) asteroids. When a small
-     			 * asteroid collides, it disappears.
-*/
-        if (asteroid.getSize() == 2) { //If large asteroid is destroyed
-        	addParticipant(new Asteroid(2, 1, asteroid.getX(), asteroid.getY(), 3, this));
-        	addParticipant(new Asteroid(1, 1, asteroid.getX(), asteroid.getY(), 3, this));
-        }
-        
-        if (asteroid.getSize() == 1) { //If large asteroid is destroyed
-        	addParticipant(new Asteroid(0, 0, asteroid.getX(), asteroid.getY(), 3, this));
-        	addParticipant(new Asteroid(2, 0, asteroid.getX(), asteroid.getY(), 3, this));
-        }
-    }
-    
+	 * An asteroid has been destroyed
+	 */
+	public void asteroidDestroyed(Asteroid asteroid) {
+		// If all the asteroids are gone, schedule a transition
+		if (countAsteroids() == 0) {
+			scheduleTransition(END_DELAY);
+		}
 
-    public void asteroidDestroyed ()
-    { 
-        // If all the asteroids are gone, schedule a transition
-        if (countAsteroids() == 0)
-        {
-            scheduleTransition(END_DELAY);
-        }
-    }
+		// Asteroid split functionality
+		/*
+		 * When a large asteroid collides with a bullet or a ship, the asteroid
+		 * splits into two medium (1) asteroids. When a medium asteroid
+		 * collides, it splits into two small (0) asteroids. When a small
+		 * asteroid collides, it disappears.
+		 */
+		if (asteroid.getSize() == 2) { // If large asteroid is destroyed
+			addParticipant(new Asteroid(2, 1, asteroid.getX(), asteroid.getY(),
+					3, this));
+			addParticipant(new Asteroid(1, 1, asteroid.getX(), asteroid.getY(),
+					3, this));
+		}
+
+		if (asteroid.getSize() == 1) { // If large asteroid is destroyed
+			addParticipant(new Asteroid(0, 0, asteroid.getX(), asteroid.getY(),
+					3, this));
+			addParticipant(new Asteroid(2, 0, asteroid.getX(), asteroid.getY(),
+					3, this));
+		}
+	}
+
+	public void asteroidDestroyed() {
+		// If all the asteroids are gone, schedule a transition
+		if (countAsteroids() == 0) {
+			scheduleTransition(END_DELAY);
+		}
+	}
 
 	/**
 	 * Schedules a transition m msecs in the future
@@ -254,6 +257,15 @@ public class Controller
 
 			// Refresh screen
 			display.refresh();
+		}
+
+		// Turning logic
+		if (turningRight && ship!=null) {
+			ship.turnRight();
+		}
+
+		if (turningLeft && ship!=null) {
+			ship.turnLeft();
 		}
 	}
 
@@ -286,7 +298,7 @@ public class Controller
 		}
 		return count;
 	}
-	
+
 	/**
 	 * Returns the number of asteroids that are active participants
 	 */
@@ -306,11 +318,15 @@ public class Controller
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT && ship != null) {
-			ship.turnRight();
+			turningRight = true;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_LEFT && ship != null) {
 			ship.turnLeft();
+			turningLeft = true;
 		} // If space, fire bullet
+		if (e.getKeyCode() == KeyEvent.VK_UP && ship != null) {
+			ship.accelerate();
+		}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE && ship != null) {
 			if (countBullets() < 9) {
 				shootBullet();
@@ -324,5 +340,12 @@ public class Controller
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT && ship != null) {
+			turningRight = false;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_LEFT && ship != null) {
+			ship.turnLeft();
+			turningLeft = false;
+		}
 	}
 }
