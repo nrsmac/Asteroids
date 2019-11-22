@@ -18,6 +18,8 @@ public class Ship extends Participant implements AsteroidDestroyer
 
     /** Game controller */
     private Controller controller;
+    
+    private boolean lit;
 
     /**
      * Constructs a ship at the specified coordinates that is pointed in the given direction.
@@ -37,8 +39,9 @@ public class Ship extends Participant implements AsteroidDestroyer
         poly.closePath();
         outline = poly;
 
+        lit = false;
         // Schedule an acceleration in two seconds
-//        new ParticipantCountdownTimer(this, "move", 2000);
+        new ParticipantCountdownTimer(this, "flicker", 1);
     }
 
     /**
@@ -101,7 +104,7 @@ public class Ship extends Participant implements AsteroidDestroyer
     {
         accelerate(SHIP_ACCELERATION);
     }
-    
+
     /**
      * Draws the flame tail from the rocket when the up key is pressed
      */
@@ -121,8 +124,12 @@ public class Ship extends Participant implements AsteroidDestroyer
         poly.lineTo(-21, -12);
         poly.closePath();
         outline = poly;
+        lit = true;
     }
-    
+
+    /**
+     * Draws the rocket without the flame
+     */
     public void undrawFlame()
     {
     	Path2D.Double poly = new Path2D.Double();
@@ -133,15 +140,24 @@ public class Ship extends Participant implements AsteroidDestroyer
         poly.lineTo(-21, -12);
         poly.closePath();
         outline = poly;
+        lit = false;
+    }
+
+    public void fire()
+    {
+    	if (lit)
+    		drawFlame();
+    	else
+    		undrawFlame();
     }
 
     /**
      * When a Ship collides with a ShipDestroyer, it expires
      */
-    
+
     //TODO: Add left, right and acceleration controls
-    
-    
+
+
     @Override
     public void collidedWith (Participant p)
     {
@@ -161,12 +177,13 @@ public class Ship extends Participant implements AsteroidDestroyer
     @Override
     public void countdownComplete (Object payload)
     {
-        // Give a burst of acceleration, then schedule another
-        // burst for 200 msecs from now.
-        if (payload.equals("move"))
+        if (payload.equals("flicker"))
         {
-//            accelerate();
-//            new ParticipantCountdownTimer(this, "move", 200);
+        	if (lit)
+        		lit = false;
+        	else
+        		lit = true;
+            new ParticipantCountdownTimer(this, "flicker", 1);
         }
     }
 
