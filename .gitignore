@@ -44,3 +44,6 @@ bin/asteroids/participants/Ship.class
 bin/asteroids/participants/Ship.class
 bin/asteroids/participants/Asteroid.class
 bin/asteroids/game/Controller.class
+bin/asteroids/game/Controller.class
+bin/asteroids/participants/Asteroid.class
+bin/asteroids/participants/Ship.class
