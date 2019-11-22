@@ -183,7 +183,7 @@ public class Ship extends Participant implements AsteroidDestroyer
         		lit = false;
         	else
         		lit = true;
-            new ParticipantCountdownTimer(this, "flicker", 1);
+            new ParticipantCountdownTimer(this, "flicker", 100);
         }
     }
 

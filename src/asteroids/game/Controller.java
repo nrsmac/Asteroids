@@ -319,11 +319,11 @@ public class Controller implements KeyListener, ActionListener, Iterable<Partici
 	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT && ship != null) {
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT && ship != null) { //Send KeyEvent.VJAFKf to HashSet
 			turningRight = true;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_LEFT && ship != null) {
-			ship.turnLeft();
+//			ship.turnLeft();
 			turningLeft = true;
 		} // If space, fire bullet
 		if (e.getKeyCode() == KeyEvent.VK_UP && ship != null) {
