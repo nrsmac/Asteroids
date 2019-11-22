@@ -44,14 +44,11 @@ public class Controller
 
 	/** Turning left */
 	boolean turningLeft = false;
-<<<<<<< HEAD
 
 	/**
 	 * Going forward
 	 */
 	boolean forward;
-=======
->>>>>>> parent of 0c064dc... Fire Animation Fires w/ Issues
 
 	/**
 	 * Constructs a controller to coordinate the game and screen
@@ -73,11 +70,8 @@ public class Controller
 		splashScreen();
 		display.setVisible(true);
 		refreshTimer.start();
-<<<<<<< HEAD
 
 		forward = false;
-=======
->>>>>>> parent of 0c064dc... Fire Animation Fires w/ Issues
 	}
 
 	/**
@@ -324,7 +318,7 @@ public class Controller
 		}
 		return count;
 	}
-	
+
 	/**
 	 * If a key of interest is pressed, record that it is down.
 	 */
@@ -344,16 +338,14 @@ public class Controller
 				shootBullet();
 			}
 		}
-<<<<<<< HEAD
 		if (e.getKeyCode() == KeyEvent.VK_UP && ship != null) {
 			ship.drawFlame();
 			ship.fire();
 			forward = true;
-=======
+
 		if (e.getKeyCode() == KeyEvent.VK_UP && ship != null)
 		{
 			ship.drawFlame();
->>>>>>> parent of 0c064dc... Fire Animation Fires w/ Issues
 		}
 	}
 
@@ -373,8 +365,5 @@ public class Controller
 			ship.turnLeft();
 			turningLeft = false;
 		}
-<<<<<<< HEAD
-=======
 	}
->>>>>>> parent of 0c064dc... Fire Animation Fires w/ Issues
 }
