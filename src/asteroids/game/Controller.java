@@ -264,6 +264,11 @@ public class Controller implements KeyListener, ActionListener, Iterable<Partici
 		if (turningLeft && ship != null) {
 			ship.turnLeft();
 		}
+		
+		if (forward && ship != null)
+		{
+			//ship.fire(); this causes the flame to be animated the entire time TODO fix
+		}
 	}
 
 	/**
