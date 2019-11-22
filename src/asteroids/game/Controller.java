@@ -11,7 +11,11 @@ import asteroids.participants.Ship;
 /**
  * Controls a game of Asteroids.
  */
-public class Controller implements KeyListener, ActionListener, Iterable<Participant> {
+public class Controller
+		implements
+			KeyListener,
+			ActionListener,
+			Iterable<Participant> {
 	/** The state of all the Participants */
 	private ParticipantState pstate;
 
@@ -22,10 +26,10 @@ public class Controller implements KeyListener, ActionListener, Iterable<Partici
 	private Timer refreshTimer;
 
 	/**
-	 * The time at which a transition to a new stage of the game should be made. A
-	 * transition is scheduled a few seconds in the future to give the user time to
-	 * see what has happened before doing something like going to a new level or
-	 * resetting the current level.
+	 * The time at which a transition to a new stage of the game should be made.
+	 * A transition is scheduled a few seconds in the future to give the user
+	 * time to see what has happened before doing something like going to a new
+	 * level or resetting the current level.
 	 */
 	private long transitionTime;
 
@@ -40,11 +44,14 @@ public class Controller implements KeyListener, ActionListener, Iterable<Partici
 
 	/** Turning left */
 	boolean turningLeft = false;
+<<<<<<< HEAD
 
 	/**
 	 * Going forward
 	 */
 	boolean forward;
+=======
+>>>>>>> parent of 0c064dc... Fire Animation Fires w/ Issues
 
 	/**
 	 * Constructs a controller to coordinate the game and screen
@@ -66,8 +73,11 @@ public class Controller implements KeyListener, ActionListener, Iterable<Partici
 		splashScreen();
 		display.setVisible(true);
 		refreshTimer.start();
+<<<<<<< HEAD
 
 		forward = false;
+=======
+>>>>>>> parent of 0c064dc... Fire Animation Fires w/ Issues
 	}
 
 	/**
@@ -112,7 +122,8 @@ public class Controller implements KeyListener, ActionListener, Iterable<Partici
 	}
 
 	/**
-	 * Place a new ship in the center of the screen. Remove any existing ship first.
+	 * Place a new ship in the center of the screen. Remove any existing ship
+	 * first.
 	 */
 	private void placeShip() {
 		// Place a new ship
@@ -123,8 +134,8 @@ public class Controller implements KeyListener, ActionListener, Iterable<Partici
 	}
 
 	/**
-	 * Places 4 asteroids near corners of the screen. Gives them a random velocity
-	 * and rotation.
+	 * Places 4 asteroids near corners of the screen. Gives them a random
+	 * velocity and rotation.
 	 */
 	private void placeAsteroids() {
 		addParticipant(new Asteroid(0, 2, EDGE_OFFSET, EDGE_OFFSET, 3, this));
@@ -204,18 +215,23 @@ public class Controller implements KeyListener, ActionListener, Iterable<Partici
 
 		// Asteroid split functionality
 		/*
-		 * When a large asteroid collides with a bullet or a ship, the asteroid splits
-		 * into two medium (1) asteroids. When a medium asteroid collides, it splits
-		 * into two small (0) asteroids. When a small asteroid collides, it disappears.
+		 * When a large asteroid collides with a bullet or a ship, the asteroid
+		 * splits into two medium (1) asteroids. When a medium asteroid
+		 * collides, it splits into two small (0) asteroids. When a small
+		 * asteroid collides, it disappears.
 		 */
 		if (asteroid.getSize() == 2) { // If large asteroid is destroyed
-			addParticipant(new Asteroid(2, 1, asteroid.getX(), asteroid.getY(), 3, this));
-			addParticipant(new Asteroid(1, 1, asteroid.getX(), asteroid.getY(), 3, this));
+			addParticipant(new Asteroid(2, 1, asteroid.getX(), asteroid.getY(),
+					3, this));
+			addParticipant(new Asteroid(1, 1, asteroid.getX(), asteroid.getY(),
+					3, this));
 		}
 
 		if (asteroid.getSize() == 1) { // If large asteroid is destroyed
-			addParticipant(new Asteroid(0, 0, asteroid.getX(), asteroid.getY(), 3, this));
-			addParticipant(new Asteroid(2, 0, asteroid.getX(), asteroid.getY(), 3, this));
+			addParticipant(new Asteroid(0, 0, asteroid.getX(), asteroid.getY(),
+					3, this));
+			addParticipant(new Asteroid(2, 0, asteroid.getX(), asteroid.getY(),
+					3, this));
 		}
 	}
 
@@ -257,11 +273,11 @@ public class Controller implements KeyListener, ActionListener, Iterable<Partici
 		}
 
 		// Turning logic
-		if (turningRight && ship != null) {
+		if (turningRight && ship!=null) {
 			ship.turnRight();
 		}
 
-		if (turningLeft && ship != null) {
+		if (turningLeft && ship!=null) {
 			ship.turnLeft();
 		}
 	}
@@ -308,7 +324,7 @@ public class Controller implements KeyListener, ActionListener, Iterable<Partici
 		}
 		return count;
 	}
-
+	
 	/**
 	 * If a key of interest is pressed, record that it is down.
 	 */
@@ -328,10 +344,16 @@ public class Controller implements KeyListener, ActionListener, Iterable<Partici
 				shootBullet();
 			}
 		}
+<<<<<<< HEAD
 		if (e.getKeyCode() == KeyEvent.VK_UP && ship != null) {
 			ship.drawFlame();
 			ship.fire();
 			forward = true;
+=======
+		if (e.getKeyCode() == KeyEvent.VK_UP && ship != null)
+		{
+			ship.drawFlame();
+>>>>>>> parent of 0c064dc... Fire Animation Fires w/ Issues
 		}
 	}
 
@@ -341,15 +363,18 @@ public class Controller implements KeyListener, ActionListener, Iterable<Partici
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_UP && ship != null) {
-			forward = false;
-		}
+		if (e.getKeyCode() == KeyEvent.VK_UP && ship != null)
+		{
+			ship.undrawFlame();
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT && ship != null) {
-				turningRight = false;
-			}
-		if (e.getKeyCode() == KeyEvent.VK_LEFT && ship != null) {
-				ship.turnLeft();
-				turningLeft = false;
-			}
+			turningRight = false;
 		}
+		if (e.getKeyCode() == KeyEvent.VK_LEFT && ship != null) {
+			ship.turnLeft();
+			turningLeft = false;
+		}
+<<<<<<< HEAD
+=======
+	}
+>>>>>>> parent of 0c064dc... Fire Animation Fires w/ Issues
 }
