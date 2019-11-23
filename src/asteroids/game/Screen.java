@@ -15,6 +15,9 @@ public class Screen extends JPanel
 
     /** Game controller */
     private Controller controller;
+    
+    /** How many lives we have today */
+    private String livesText;
 
     /**
      * Creates an empty screen
@@ -23,6 +26,7 @@ public class Screen extends JPanel
     {
         this.controller = controller;
         legend = "";
+        livesText = "";
         setPreferredSize(new Dimension(SIZE, SIZE));
         setMinimumSize(new Dimension(SIZE, SIZE));
         setBackground(Color.black);
@@ -39,6 +43,18 @@ public class Screen extends JPanel
         this.legend = legend;
     }
 
+    public void setLivesText (String livesText) {
+    	this.livesText = livesText; 
+    }
+    
+    public void setLivesAvatar(Shape shipOutline) {
+    	
+    }
+    
+    public void setLevelText() {
+    	
+    }
+    
     /**
      * Paint the participants onto this panel
      */
@@ -62,5 +78,10 @@ public class Screen extends JPanel
         // Draw the legend across the middle of the panel
         int size = g.getFontMetrics().stringWidth(legend);
         g.drawString(legend, (SIZE - size) / 2, SIZE / 2);
+        
+        //Draw Other non-participant screen components
+        Font smallFont = new Font ("Courier New", Font.PLAIN, 40);
+        g.setFont(smallFont);
+        g.drawString(livesText, 80, 90);
     }
 }

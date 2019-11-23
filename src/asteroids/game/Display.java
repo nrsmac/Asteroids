@@ -67,4 +67,12 @@ public class Display extends JFrame
     {
         screen.setLegend(s);
     }
+    
+    /**
+     * Sets the large legend
+     */
+    public void setLivesText (int l)
+    {
+        screen.setLivesText(l + "");
+    }
 }
