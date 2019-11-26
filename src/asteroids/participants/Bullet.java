@@ -27,7 +27,7 @@ public class Bullet extends Participant implements AsteroidDestroyer {
 		
 		// // Schedule an acceleration in two seconds
 		// new ParticipantCountdownTimer(this, "move", 100);
-		new ParticipantCountdownTimer(this, "shoot", 100);
+		new ParticipantCountdownTimer(this, "shoot", Constants.BULLET_DURATION);
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class Bullet extends Participant implements AsteroidDestroyer {
 
 	@Override
 	public void countdownComplete(Object payload) {
-
+		expire(this);
 	}
 
 }

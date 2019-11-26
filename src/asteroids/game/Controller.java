@@ -168,7 +168,7 @@ public class Controller
 
 		// Reset statistics
 //		lives = 3;
-		display.setLivesText(lives);
+		display.setLives(lives);
 
 		// Start listening to events (but don't listen twice)
 		display.removeKeyListener(this);
@@ -192,15 +192,24 @@ public class Controller
 		// Null out the ship
 		ship = null;
 
+
 		// Decrement lives
 		lives--;
-		display.setLivesText(lives);
+		display.setLives(lives);
+		
+		if (lives <= 0) {
+			// Display a legend
+			display.setLegend("Game Over");
+			
+		} else {
+			// TODO: Make ship burst into dust
+			placeShip();
+		}
+
+		
 
 		// Since the ship was destroyed, schedule a transition
 		scheduleTransition(END_DELAY);
-		// TODO: Make ship burst into dust
-		
-		placeShip();
 
 	}
 
@@ -346,7 +355,7 @@ public class Controller
 		if (e.getKeyCode() == KeyEvent.VK_LEFT && ship != null) {
 			// ship.turnLeft();
 			turningLeft = true;
-		} // If space, fire bullet
+		} 
 		if (e.getKeyCode() == KeyEvent.VK_UP && ship != null) {
 			ship.accelerate();
 		}

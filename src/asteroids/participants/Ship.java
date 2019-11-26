@@ -14,7 +14,7 @@ import asteroids.game.ParticipantCountdownTimer;
 public class Ship extends Participant implements AsteroidDestroyer
 {
     /** The outline of the ship */
-    private Shape outline;
+    public Shape outline;
 
     /** Game controller */
     private Controller controller;
@@ -65,10 +65,11 @@ public class Ship extends Participant implements AsteroidDestroyer
     }
 
     @Override
-    protected Shape getOutline ()
+	public Shape getOutline ()
     {
         return outline;
     }
+    
 
     /**
      * Customizes the base move method by imposing friction
@@ -155,7 +156,6 @@ public class Ship extends Participant implements AsteroidDestroyer
      * When a Ship collides with a ShipDestroyer, it expires
      */
 
-    //TODO: Add left, right and acceleration controls
 
 
     @Override
@@ -170,6 +170,7 @@ public class Ship extends Participant implements AsteroidDestroyer
             controller.shipDestroyed();
         }
     }
+    
 
     /**
      * This method is invoked when a ParticipantCountdownTimer completes its countdown.

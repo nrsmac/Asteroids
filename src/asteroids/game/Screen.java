@@ -2,7 +2,11 @@ package asteroids.game;
 
 import static asteroids.game.Constants.*;
 import java.awt.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
+
+import asteroids.participants.Ship;
 
 /**
  * The area of the display in which the game takes place.
@@ -16,8 +20,12 @@ public class Screen extends JPanel
     /** Game controller */
     private Controller controller;
     
-    /** How many lives we have today */
-    private String livesText;
+    /**Lives*/
+    private int lives;
+    
+    private ArrayList<Ship> livesAvatarArray;
+    
+//    private ArrayList<Ship> livesAvatarArray;
 
     /**
      * Creates an empty screen
@@ -25,14 +33,19 @@ public class Screen extends JPanel
     public Screen (Controller controller)
     {
         this.controller = controller;
+        livesAvatarArray = new ArrayList<Ship>();
+////       this.setLivesAvatar(3);
+//        livesAvatarArray.add(new Ship(500, 20, -Math.PI/2, controller));
+        
+        
         legend = "";
-        livesText = "";
         setPreferredSize(new Dimension(SIZE, SIZE));
         setMinimumSize(new Dimension(SIZE, SIZE));
         setBackground(Color.black);
         setForeground(Color.white);
         setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 120));
         setFocusable(true);
+        
     }
 
     /**
@@ -43,16 +56,29 @@ public class Screen extends JPanel
         this.legend = legend;
     }
 
-    public void setLivesText (String livesText) {
-    	this.livesText = livesText; 
+    public void setLives (int lives) {
+    	this.lives = lives; 
     }
     
-    public void setLivesAvatar(Shape shipOutline) {
+    public void setLivesAvatar(int lives) {
+
+    	//Populate livesAvatar Array
+    	for (int i = 0; i <= 0; i++) {
+    		livesAvatarArray.add(new Ship(100, 100, -Math.PI/2, controller));
+    	}
     	
-    }
-    
-    public void setLevelText() {
-    	
+    	//Adjust
+    	int i = 0;
+    	for (Ship ship: livesAvatarArray) {
+        	if (i == 0) {
+        		ship.setPosition(40, 40);
+        	}
+        	else {
+        		double previousShipX = livesAvatarArray.get(i-1).getX();
+        		double previousShipY = livesAvatarArray.get(i-1).getY();
+        		ship.setPosition(previousShipX + 40, previousShipY);
+        	}
+        }
     }
     
     /**
@@ -82,6 +108,14 @@ public class Screen extends JPanel
         //Draw Other non-participant screen components
         Font smallFont = new Font ("Courier New", Font.PLAIN, 40);
         g.setFont(smallFont);
-        g.drawString(livesText, 80, 90);
+        g.drawString(lives+"", 80, 90);
+        
+        //Draw ships
+        for (Ship ship : livesAvatarArray) {
+        	g.draw(ship.getOutline());
+        }
     }
+
+    
+
 }

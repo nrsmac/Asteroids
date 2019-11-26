@@ -71,8 +71,9 @@ public class Display extends JFrame
     /**
      * Sets the large legend
      */
-    public void setLivesText (int l)
+    public void setLives (int l)
     {
-        screen.setLivesText(l + "");
+        screen.setLives(l);
     }
+    
 }
