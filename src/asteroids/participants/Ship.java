@@ -144,7 +144,7 @@ public class Ship extends Participant implements AsteroidDestroyer
         lit = false;
     }
 
-    public void fire()
+    public void showFlame()
     {
     	if (lit)
     		drawFlame();

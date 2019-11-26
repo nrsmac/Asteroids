@@ -127,3 +127,5 @@ AsteroidsDemo/sounds/saucerBig.wav
 AsteroidsDemo/sounds/saucerSmall.wav
 AsteroidsDemo/sounds/SoundDemo.class
 AsteroidsDemo/sounds/thrust.wav
+AsteroidsDemo/asteroids/destroyers/package-info.class
+*.wav

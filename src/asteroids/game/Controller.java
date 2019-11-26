@@ -52,7 +52,7 @@ public class Controller
 	/**
 	 * Going forward
 	 */
-	boolean forward;
+	boolean movingForward;
 
 	/**
 	 * Constructs a controller to coordinate the game and screen
@@ -77,7 +77,7 @@ public class Controller
 		
 		lives = 3;
 
-		forward = false;
+		movingForward = false;
 	}
 
 	/**
@@ -290,9 +290,10 @@ public class Controller
 			ship.turnLeft();
 		}
 
-		if (forward && ship != null) {
+		if (movingForward && ship != null) {
 			// ship.fire(); this causes the flame to be animated the entire time
 			// TODO fix
+			ship.accelerate();
 		}
 
 	}
@@ -357,17 +358,15 @@ public class Controller
 			turningLeft = true;
 		} 
 		if (e.getKeyCode() == KeyEvent.VK_UP && ship != null) {
-			ship.accelerate();
+			movingForward = true;
+			ship.showFlame();
 		}
-		if (e.getKeyCode() == KeyEvent.VK_SPACE && ship != null) {
+		if (e.getKeyCode() == KeyEvent.VK_DOWN && ship != null) {
 			if (countBullets() < 9) {
 				shootBullet();
 			}
 		}
-		if (e.getKeyCode() == KeyEvent.VK_UP && ship != null) {
-			ship.fire();
-			forward = true;
-		}
+
 	}
 
 	@Override
@@ -377,7 +376,7 @@ public class Controller
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_UP && ship != null) {
-			forward = false;
+			movingForward = false;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT && ship != null) {
 			turningRight = false;
