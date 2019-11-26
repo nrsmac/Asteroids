@@ -346,22 +346,19 @@ public class Controller
 	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT && ship != null) { // Send
-																	// KeyEvent.VJAFKf
-																	// to
-																	// HashSet
+		if ((e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) && ship != null) { 
 			turningRight = true;
 		}
 		e.getClass();
-		if (e.getKeyCode() == KeyEvent.VK_LEFT && ship != null) {
+		if ((e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) && ship != null) {
 			// ship.turnLeft();
 			turningLeft = true;
 		} 
-		if (e.getKeyCode() == KeyEvent.VK_UP && ship != null) {
+		if ((e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) && ship != null) {
 			movingForward = true;
 			ship.showFlame();
 		}
-		if (e.getKeyCode() == KeyEvent.VK_DOWN && ship != null) {
+		if ((e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_SPACE) && ship != null) {
 			if (countBullets() < 9) {
 				shootBullet();
 			}
@@ -375,15 +372,15 @@ public class Controller
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_UP && ship != null) {
+		if ((e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) && ship != null) {
 			movingForward = false;
 		}
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT && ship != null) {
+		if ((e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) && ship != null) {
 			turningRight = false;
 		}
-		if (e.getKeyCode() == KeyEvent.VK_LEFT && ship != null) {
-			ship.turnLeft();
+		if ((e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) && ship != null) {
 			turningLeft = false;
 		}
+		
 	}
 }
