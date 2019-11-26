@@ -167,7 +167,7 @@ public class Controller
 		placeShip();
 
 		// Reset statistics
-//		lives = 3;
+		lives = 3;
 		display.setLives(lives);
 
 		// Start listening to events (but don't listen twice)

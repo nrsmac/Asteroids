@@ -16,7 +16,6 @@ public class Bullet extends Participant implements AsteroidDestroyer {
 	private Shape outline;
 
 	public Bullet(Ship ship, Controller controller) {
-
 		Ellipse2D.Double poly = new Ellipse2D.Double(0,0,1,1);
 		outline = poly;
 
@@ -39,7 +38,6 @@ public class Bullet extends Participant implements AsteroidDestroyer {
 	@Override
 	public void collidedWith(Participant p) {
 		if (p instanceof Asteroid) {
-//			System.out.println("bullet destroyed");
 			// Expire the bullet from the game
 			Participant.expire(this);
 			// Tell the controller the asteroid was destroyed
