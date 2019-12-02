@@ -22,7 +22,10 @@ public class Screen extends JPanel {
 	/** Lives */
 	private int lives;
 
+	/** Lives ship outlines */
 	private ArrayList<Ship> livesAvatarArray;
+	
+	private int level;
 
 	// private ArrayList<Ship> livesAvatarArray;
 
@@ -72,6 +75,10 @@ public class Screen extends JPanel {
 			}
 		}
 	}
+	
+	public void setLevel(int level) {
+		this.level = level;
+	}
 
 	/**
 	 * Paint the participants onto this panel
@@ -100,7 +107,15 @@ public class Screen extends JPanel {
 		// Draw Other non-participant screen components
 		Font smallFont = new Font("Monospace", Font.PLAIN, 40);
 		g.setFont(smallFont);
-		g.drawString(lives + "", 80, 40);
+		if (lives != 0) {
+			g.drawString(lives + "", 80, 40);
+		}
+		if (level != 0) {
+			g.drawString(level + "", SIZE - 30, 50);
+		}
+		
+		
+		
 
 		// Draw ships
 		for (Ship ship : livesAvatarArray) {
