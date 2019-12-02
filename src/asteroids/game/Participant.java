@@ -4,14 +4,13 @@ import static asteroids.game.Constants.*;
 import java.awt.*;
 import java.awt.geom.*;
 
-import asteroids.participants.Bullet;
 
 /**
  * Represents a single moving element in an asteroids game. Each Participant object has an outline (used for drawing
  * it), a position, a rotation, and a velocity. A Participant can be either "active" or "expired". An active Participant
  * is displayed on the screen and can interact with other Participants. An expired Participant is not displayed on the
  * screen, cannot interact with other Participants, and will be removed automatically from the game
- * 
+ *
  * This is an abstract class, so it can be used only by creating a derived class that extends it and implements its
  * abstract methods
  */
@@ -289,22 +288,22 @@ public abstract class Participant
         if (bounds.getMaxX() < 0)
         {
             x += SIZE + (bounds.getMaxX() - bounds.getMinX());
-  
+
         }
         if (bounds.getMinX() >= SIZE)
         {
             x += -SIZE - (bounds.getMaxX() - bounds.getMinX());
-            
+
         }
         if (bounds.getMaxY() < 0)
         {
             y += SIZE + (bounds.getMaxY() - bounds.getMinY());
-            
+
         }
         if (bounds.getMinY() >= SIZE)
         {
             y += -SIZE - (bounds.getMaxY() - bounds.getMinY());
-            
+
         }
     }
 

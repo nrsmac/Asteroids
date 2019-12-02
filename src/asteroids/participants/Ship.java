@@ -155,9 +155,6 @@ public class Ship extends Participant implements AsteroidDestroyer
     /**
      * When a Ship collides with a ShipDestroyer, it expires
      */
-
-
-
     @Override
     public void collidedWith (Participant p)
     {

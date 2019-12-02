@@ -122,17 +122,17 @@ public class ParticipantState implements Iterable<Participant>
             }
         }
     }
-    
-    
+
+
     /**
      * Returns an Iterator that makes it possible to iterate through all the unexpired participants via an enhanced for loop, as in
-     * 
+     *
      *  <pre>
      *  for (Participant p: pstate)
      *  {
      *      ....;
      *  }</pre>
-     *  
+     *
      *  assuming that pstate is a ParticipantState object.
      */
     @Override
@@ -140,7 +140,7 @@ public class ParticipantState implements Iterable<Participant>
     {
         return new ParticipantIterator();
     }
-    
+
     /**
      * Represents an Iterator over the unexpired participants.
      */
@@ -148,15 +148,15 @@ public class ParticipantState implements Iterable<Participant>
     {
         /** An iterator over the participants */
         private Iterator<Participant> participantsIter;
-        
+
         /** An iterator over the pendingAdds */
         private Iterator<Participant> pendingsIter;
-        
+
         /** If non-null, the next object to be returned by the next() method */
         private Participant saved;
-        
+
         /**
-         * Creates a ParticipantIterator 
+         * Creates a ParticipantIterator
          */
         public ParticipantIterator ()
         {
@@ -164,7 +164,7 @@ public class ParticipantState implements Iterable<Participant>
             pendingsIter = pendingAdds.iterator();
             saved = null;
         }
-        
+
         @Override
         public boolean hasNext ()
         {
@@ -172,7 +172,7 @@ public class ParticipantState implements Iterable<Participant>
             {
                 return true;
             }
-            
+
             while (participantsIter.hasNext())
             {
                 Participant p = participantsIter.next();
@@ -182,7 +182,7 @@ public class ParticipantState implements Iterable<Participant>
                     return true;
                 }
             }
-            
+
             while (pendingsIter.hasNext())
             {
                 Participant p = pendingsIter.next();
@@ -192,10 +192,10 @@ public class ParticipantState implements Iterable<Participant>
                     return true;
                 }
             }
-            
+
             return false;
         }
-        
+
         @Override
         public Participant next ()
         {
@@ -205,7 +205,7 @@ public class ParticipantState implements Iterable<Participant>
                 saved = null;
                 return p;
             }
-            
+
             while (participantsIter.hasNext())
             {
                 Participant p = participantsIter.next();
@@ -214,7 +214,7 @@ public class ParticipantState implements Iterable<Participant>
                     return p;
                 }
             }
-            
+
             while (pendingsIter.hasNext())
             {
                 Participant p = pendingsIter.next();
@@ -223,8 +223,8 @@ public class ParticipantState implements Iterable<Participant>
                     return p;
                 }
             }
-            
+
             throw new NoSuchElementException();
-        }       
+        }
     }
 }

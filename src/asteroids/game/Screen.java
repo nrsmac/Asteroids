@@ -71,21 +71,6 @@ public class Screen extends JPanel {
 				livesAvatarArray.add(newShip);
 			}
 		}
-
-		// // Adjust
-		// int i = 0;
-		// for (Ship ship : livesAvatarArray) {
-		// if (i == 0) {
-		// ship.setPosition(40, 80);
-		// ship.move();
-		// } else {
-		// double previousShipX = livesAvatarArray.get(i - 1).getX();
-		// double previousShipY = livesAvatarArray.get(i - 1).getY();
-		// ship.setPosition(previousShipX + 40, previousShipY);
-		// ship.move();
-		// }
-		// i++;
-		// }
 	}
 
 	/**
@@ -113,7 +98,7 @@ public class Screen extends JPanel {
 		g.drawString(legend, (SIZE - size) / 2, SIZE / 2);
 
 		// Draw Other non-participant screen components
-		Font smallFont = new Font("Courier New", Font.PLAIN, 40);
+		Font smallFont = new Font("Monospace", Font.PLAIN, 40);
 		g.setFont(smallFont);
 		g.drawString(lives + "", 80, 40);
 

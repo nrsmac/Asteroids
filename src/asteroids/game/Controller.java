@@ -2,8 +2,15 @@ package asteroids.game;
 
 import static asteroids.game.Constants.*;
 import java.awt.event.*;
+import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Iterator;
+
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import asteroids.participants.Asteroid;
 import asteroids.participants.Bullet;
@@ -53,6 +60,22 @@ public class Controller
 	 * Going forward
 	 */
 	boolean movingForward;
+	
+	/**beat timer*/
+	Timer beatTimer;
+
+	/** Clip objects */
+	Clip bangAlienShip;
+	Clip bangShip;
+	Clip bangLarge;
+	Clip bangMedium;
+	Clip bangSmall;
+	Clip beat1;
+	Clip beat2;
+	Clip fireClip;
+	Clip saucerBig;
+	Clip saucerSmall;
+	Clip thrust;
 
 	/**
 	 * Constructs a controller to coordinate the game and screen
@@ -74,10 +97,26 @@ public class Controller
 		splashScreen();
 		display.setVisible(true);
 		refreshTimer.start();
-		
+
 		lives = 3;
 
 		movingForward = false;
+
+		// Create sound clips to reduce lag
+		bangAlienShip = createClip("/sounds/bangAlienShip.wav");
+		bangShip = createClip("/sounds/bangShip.wav");
+		fireClip = createClip("/sounds/fire.wav");
+		saucerSmall = createClip("/sounds/saucerSmall.wav");
+		bangLarge = createClip("/sounds/bangLarge.wav");
+		bangMedium = createClip("/sounds/bangMedium.wav");
+		bangSmall = createClip("/sounds/bangSmall.wav");
+		beat1 = createClip("/sounds/beat1.wav");
+		beat2 = createClip("/sounds/beat2.wav");
+		saucerBig = createClip("/sounds/saucerBig.wav");
+		saucerSmall = createClip("/sounds/saucerSmall.wav");
+		thrust = createClip("/sounds/thrust.wav");
+		
+		beatTimer = new Timer(INITIAL_BEAT, this);
 	}
 
 	/**
@@ -119,6 +158,11 @@ public class Controller
 	// Shoots bullets
 	private void shootBullet() {
 		addParticipant(new Bullet(ship, this));
+		if (fireClip.isRunning()) {
+			fireClip.stop();
+		}
+		fireClip.setFramePosition(0);
+		fireClip.start();
 	}
 
 	/**
@@ -131,6 +175,7 @@ public class Controller
 		ship = new Ship(SIZE / 2, SIZE / 2, -Math.PI / 2, this);
 		addParticipant(ship);
 		display.setLegend("");
+		beatTimer.start();
 	}
 
 	/**
@@ -192,21 +237,24 @@ public class Controller
 		// Null out the ship
 		ship = null;
 
-
 		// Decrement lives
 		lives--;
 		display.setLives(lives);
 		
+		if (bangShip.isRunning()) {
+			bangShip.stop();
+		}
+		bangShip.setFramePosition(0);
+		bangShip.start();
+
 		if (lives <= 0) {
 			// Display a legend
 			display.setLegend("Game Over");
-			
+
 		} else {
 			// TODO: Make ship burst into dust
 			placeShip();
 		}
-
-		
 
 		// Since the ship was destroyed, schedule a transition
 		scheduleTransition(END_DELAY);
@@ -218,8 +266,14 @@ public class Controller
 	 */
 	public void asteroidDestroyed(Asteroid asteroid) {
 		// If all the asteroids are gone, schedule a transition
+		//TODO Toggle dust animation
 		if (countAsteroids() == 0) {
 			scheduleTransition(END_DELAY);
+			if (bangSmall.isRunning()) {
+				bangSmall.stop();
+			}
+			bangSmall.setFramePosition(0);
+			bangSmall.start();
 		}
 
 		// Asteroid split functionality
@@ -230,6 +284,11 @@ public class Controller
 		 * asteroid collides, it disappears.
 		 */
 		if (asteroid.getSize() == 2) { // If large asteroid is destroyed
+			if (bangMedium.isRunning()) {
+				bangMedium.stop();
+			}
+			bangMedium.setFramePosition(0);
+			bangMedium.start();
 			addParticipant(new Asteroid(2, 1, asteroid.getX(), asteroid.getY(),
 					3, this));
 			addParticipant(new Asteroid(1, 1, asteroid.getX(), asteroid.getY(),
@@ -237,6 +296,11 @@ public class Controller
 		}
 
 		if (asteroid.getSize() == 1) { // If large asteroid is destroyed
+			if (bangLarge.isRunning()) {
+				bangLarge.stop();
+			}
+			bangLarge.setFramePosition(0);
+			bangLarge.start();
 			addParticipant(new Asteroid(0, 0, asteroid.getX(), asteroid.getY(),
 					3, this));
 			addParticipant(new Asteroid(2, 0, asteroid.getX(), asteroid.getY(),
@@ -279,6 +343,24 @@ public class Controller
 
 			// Refresh screen
 			display.refresh();
+		} else if (e.getSource() == beatTimer && beatTimer.getDelay() <= FASTEST_BEAT) {
+			beatTimer.setDelay(beatTimer.getDelay() + 1);
+			if (beat1.isRunning()) {
+				beat1.stop();
+			}
+			beat1.setFramePosition(0);
+			beat1.start();
+			try {
+				beatTimer.wait(beatTimer.getDelay()/2);
+				if (beat2.isRunning()) {
+					beat2.stop();
+				}
+				beat2.setFramePosition(0);
+				beat2.start();
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 
 		// Turning logic
@@ -342,23 +424,56 @@ public class Controller
 	}
 
 	/**
+	 * Creates an audio clip from a sound file.
+	 */
+	public Clip createClip(String soundFile) {
+		// Opening the sound file this way will work no matter how the
+		// project is exported. The only restriction is that the
+		// sound files must be stored in a package.
+		try (BufferedInputStream sound = new BufferedInputStream(
+				getClass().getResourceAsStream(soundFile))) {
+			// Create and return a Clip that will play a sound file. There are
+			// various reasons that the creation attempt could fail. If it
+			// fails, return null.
+			Clip clip = AudioSystem.getClip();
+			clip.open(AudioSystem.getAudioInputStream(sound));
+			return clip;
+		} catch (LineUnavailableException e) {
+			return null;
+		} catch (IOException e) {
+			return null;
+		} catch (UnsupportedAudioFileException e) {
+			return null;
+		}
+	}
+
+	/**
 	 * If a key of interest is pressed, record that it is down.
 	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if ((e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) && ship != null) { 
+		if ((e.getKeyCode() == KeyEvent.VK_RIGHT
+				|| e.getKeyCode() == KeyEvent.VK_D) && ship != null) {
 			turningRight = true;
 		}
 		e.getClass();
-		if ((e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) && ship != null) {
-			// ship.turnLeft();
+		if ((e.getKeyCode() == KeyEvent.VK_LEFT
+				|| e.getKeyCode() == KeyEvent.VK_A) && ship != null) {
 			turningLeft = true;
-		} 
-		if ((e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) && ship != null) {
+		}
+		if ((e.getKeyCode() == KeyEvent.VK_UP
+				|| e.getKeyCode() == KeyEvent.VK_W) && ship != null) {
 			movingForward = true;
 			ship.showFlame();
+			if (thrust.isRunning()) {
+				thrust.stop();
+			}
+			thrust.setFramePosition(0);
+			thrust.start();
 		}
-		if ((e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_SPACE) && ship != null) {
+		if ((e.getKeyCode() == KeyEvent.VK_DOWN
+				|| e.getKeyCode() == KeyEvent.VK_S
+				|| e.getKeyCode() == KeyEvent.VK_SPACE) && ship != null) {
 			if (countBullets() < 9) {
 				shootBullet();
 			}
@@ -372,15 +487,18 @@ public class Controller
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if ((e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) && ship != null) {
+		if ((e.getKeyCode() == KeyEvent.VK_UP
+				|| e.getKeyCode() == KeyEvent.VK_W) && ship != null) {
 			movingForward = false;
 		}
-		if ((e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) && ship != null) {
+		if ((e.getKeyCode() == KeyEvent.VK_RIGHT
+				|| e.getKeyCode() == KeyEvent.VK_D) && ship != null) {
 			turningRight = false;
 		}
-		if ((e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) && ship != null) {
+		if ((e.getKeyCode() == KeyEvent.VK_LEFT
+				|| e.getKeyCode() == KeyEvent.VK_A) && ship != null) {
 			turningLeft = false;
 		}
-		
 	}
+
 }
