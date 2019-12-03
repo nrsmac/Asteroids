@@ -13,6 +13,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import asteroids.participants.Asteroid;
+import asteroids.participants.AsteroidDebris;
 import asteroids.participants.Bullet;
 import asteroids.participants.Ship;
 
@@ -313,6 +314,11 @@ public class Controller
 		if (countAsteroids() == 0) {
 			scheduleTransition(END_DELAY);
 		}
+	}
+	
+	public void genAsteroidDebris(double d, double e)
+	{
+		addParticipant(new AsteroidDebris(d, e));
 	}
 
 	/**
