@@ -48,21 +48,21 @@ public class Controller
 	/** The game display */
 	private Display display;
 
-	/** Turning right */
-	boolean turningRight = false;
+	/** Turning right checked every refresh */
+	private boolean turningRight = false;
 
-	/** Turning left */
-	boolean turningLeft = false;
-
-	public HashSet<KeyEvent> pressedEvents = new HashSet<>();
-	public HashSet<KeyEvent> releasedEvents = new HashSet<>();
+	/** Turning left checked every refresh */
+	private boolean turningLeft = false;
 
 	/**
-	 * Going forward
+	 * Going forward, checked every refresh
 	 */
-	boolean movingForward;
-	
-	/**beat timer*/
+	private boolean movingForward;
+
+	/** level */
+	public int level;
+
+	/** beat timer */
 	Timer beatTimer;
 
 	/** Clip objects */
@@ -100,6 +100,7 @@ public class Controller
 		refreshTimer.start();
 
 		lives = 3;
+		level = 1;
 
 		movingForward = false;
 
@@ -116,7 +117,7 @@ public class Controller
 		saucerBig = createClip("/sounds/saucerBig.wav");
 		saucerSmall = createClip("/sounds/saucerSmall.wav");
 		thrust = createClip("/sounds/thrust.wav");
-		
+
 		beatTimer = new Timer(INITIAL_BEAT, this);
 	}
 
@@ -145,7 +146,7 @@ public class Controller
 		display.setLegend("Asteroids");
 
 		// Place four asteroids near the corners of the screen.
-		placeAsteroids();
+		placeAsteroids(4);
 	}
 
 	/**
@@ -183,11 +184,35 @@ public class Controller
 	 * Places 4 asteroids near corners of the screen. Gives them a random
 	 * velocity and rotation.
 	 */
-	private void placeAsteroids() {
-		addParticipant(new Asteroid(0, 2, EDGE_OFFSET, EDGE_OFFSET, 3, this));
-		addParticipant(new Asteroid(1, 2, -EDGE_OFFSET, EDGE_OFFSET, 3, this));
-		addParticipant(new Asteroid(2, 2, EDGE_OFFSET, -EDGE_OFFSET, 3, this));
-		addParticipant(new Asteroid(3, 2, -EDGE_OFFSET, -EDGE_OFFSET, 3, this));
+	private void placeAsteroids(int asteroids) {
+
+		if(asteroids == 4){
+			//TODO: Restore asteroid functionality when done with level stuff 
+//			addParticipant(new Asteroid(0, 2, EDGE_OFFSET, EDGE_OFFSET, 3, this));
+//			addParticipant(new Asteroid(1, 2, -EDGE_OFFSET, EDGE_OFFSET, 3, this));
+//			addParticipant(new Asteroid(2, 2, EDGE_OFFSET, -EDGE_OFFSET, 3, this));
+//			addParticipant(new Asteroid(3, 2, -EDGE_OFFSET, -EDGE_OFFSET, 3, this));
+			addParticipant(new Asteroid(3, 0, -EDGE_OFFSET, -EDGE_OFFSET, 3, this));
+		}
+		
+		if(asteroids == 5){
+//			addParticipant(new Asteroid(0, 2, EDGE_OFFSET, EDGE_OFFSET, 3, this));
+//			addParticipant(new Asteroid(1, 2, -EDGE_OFFSET, EDGE_OFFSET, 3, this));
+//			addParticipant(new Asteroid(2, 2, EDGE_OFFSET, -EDGE_OFFSET, 3, this));
+//			addParticipant(new Asteroid(3, 2, -EDGE_OFFSET, -EDGE_OFFSET, 3, this));
+//			addParticipant(new Asteroid(0, 2, -EDGE_OFFSET, -EDGE_OFFSET-45, 3, this));
+			addParticipant(new Asteroid(3, 0, -EDGE_OFFSET, -EDGE_OFFSET, 3, this));
+		}
+		
+		if(asteroids == 6){
+//			addParticipant(new Asteroid(0, 2, EDGE_OFFSET, EDGE_OFFSET, 3, this));
+//			addParticipant(new Asteroid(1, 2, -EDGE_OFFSET, EDGE_OFFSET, 3, this));
+//			addParticipant(new Asteroid(2, 2, EDGE_OFFSET, -EDGE_OFFSET, 3, this));
+//			addParticipant(new Asteroid(3, 2, -EDGE_OFFSET, -EDGE_OFFSET, 3, this));
+//			addParticipant(new Asteroid(0, 2, -EDGE_OFFSET, -EDGE_OFFSET-45, 3, this));
+//			addParticipant(new Asteroid(1, 2, -EDGE_OFFSET, EDGE_OFFSET+45, 3, this));
+			addParticipant(new Asteroid(3, 0, -EDGE_OFFSET, -EDGE_OFFSET, 3, this));
+		}
 	}
 
 	/**
@@ -200,17 +225,13 @@ public class Controller
 	}
 
 	/**
-	 * Sets things up and begins a new game.
+	 * begins a new game.
 	 */
 	private void initialScreen() {
 		// Clear the screen
 		clear();
 
-		// Place asteroids
-		placeAsteroids();
-
-		// Place the ship
-		placeShip();
+		
 
 		// Reset statistics
 		lives = 3;
@@ -222,6 +243,47 @@ public class Controller
 
 		// Give focus to the game screen
 		display.requestFocusInWindow();
+		
+		setUpLevel();
+	}
+
+	/**
+	 * Sets differences in level
+	 */
+	private void setUpLevel() {
+		//set text
+		display.setLevel(level);
+	
+		//corresponding level parameters
+		if (level == 1) {
+			// Place asteroids
+			placeAsteroids(4);
+
+			// Place the ship
+			placeShip();
+
+		}
+		
+		if (level == 2) {
+			// Place asteroids
+			placeAsteroids(5);
+
+			// Place the ship
+			placeShip();
+			
+			//TODO: Place alien ship? when shall that be done? 
+		}
+		
+		if (level == 2) {
+			// Place asteroids
+			placeAsteroids(5);
+
+			// Place the ship
+			placeShip();
+			
+			//TODO: Place alien ship? when shall that be done? 
+		}
+		
 	}
 
 	/**
@@ -241,7 +303,7 @@ public class Controller
 		// Decrement lives
 		lives--;
 		display.setLives(lives);
-		
+
 		if (bangShip.isRunning()) {
 			bangShip.stop();
 		}
@@ -267,7 +329,7 @@ public class Controller
 	 */
 	public void asteroidDestroyed(Asteroid asteroid) {
 		// If all the asteroids are gone, schedule a transition
-		//TODO Toggle dust animation
+		// TODO Toggle dust animation
 		if (countAsteroids() == 0) {
 			scheduleTransition(END_DELAY);
 			if (bangSmall.isRunning()) {
@@ -349,7 +411,8 @@ public class Controller
 
 			// Refresh screen
 			display.refresh();
-		} else if (e.getSource() == beatTimer && beatTimer.getDelay() <= FASTEST_BEAT) {
+		} else if (e.getSource() == beatTimer
+				&& beatTimer.getDelay() <= FASTEST_BEAT) {
 			beatTimer.setDelay(beatTimer.getDelay() + 1);
 			if (beat1.isRunning()) {
 				beat1.stop();
@@ -357,7 +420,7 @@ public class Controller
 			beat1.setFramePosition(0);
 			beat1.start();
 			try {
-				beatTimer.wait(beatTimer.getDelay()/2);
+				beatTimer.wait(beatTimer.getDelay() / 2);
 				if (beat2.isRunning()) {
 					beat2.stop();
 				}
@@ -382,6 +445,20 @@ public class Controller
 			// ship.fire(); this causes the flame to be animated the entire time
 			// TODO fix
 			ship.accelerate();
+		}
+
+		// Manages Level variable
+		if (countAsteroids() == 0) {
+			
+			if (level>3) {
+				display.setLegend("You Won!");
+				level=3;
+			}
+			else {
+				level++;
+				scheduleTransition(END_DELAY);
+				setUpLevel();
+			}
 		}
 
 	}
