@@ -84,4 +84,8 @@ public class Display extends JFrame
         screen.setLevel(l);
     }
     
+    public void setPoints(int points) {
+    	screen.setPoints(points);
+    }
+    
 }

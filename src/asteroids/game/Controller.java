@@ -60,9 +60,13 @@ public class Controller
 
 	/** level */
 	public int level;
+	
+	/** points */
+	public int points;
 
 	/** beat timer */
 	Timer beatTimer;
+	
 
 	/** Clip objects */
 	Clip bangAlienShip;
@@ -185,32 +189,48 @@ public class Controller
 	 */
 	private void placeAsteroids(int asteroids) {
 
-		if(asteroids == 4){
-			//TODO: Restore asteroid functionality when done with level stuff 
-//			addParticipant(new Asteroid(0, 2, EDGE_OFFSET, EDGE_OFFSET, 3, this));
-//			addParticipant(new Asteroid(1, 2, -EDGE_OFFSET, EDGE_OFFSET, 3, this));
-//			addParticipant(new Asteroid(2, 2, EDGE_OFFSET, -EDGE_OFFSET, 3, this));
-//			addParticipant(new Asteroid(3, 2, -EDGE_OFFSET, -EDGE_OFFSET, 3, this));
-			addParticipant(new Asteroid(3, 0, -EDGE_OFFSET, -EDGE_OFFSET, 3, this));
+		if (asteroids == 4) {
+			// TODO: Restore asteroid functionality when done with level stuff
+			 addParticipant(new Asteroid(0, 2, EDGE_OFFSET, EDGE_OFFSET, 3,
+			 this));
+			 addParticipant(new Asteroid(1, 2, -EDGE_OFFSET, EDGE_OFFSET, 3,
+			 this));
+			 addParticipant(new Asteroid(2, 2, EDGE_OFFSET, -EDGE_OFFSET, 3,
+			 this));
+			 addParticipant(new Asteroid(3, 2, -EDGE_OFFSET, -EDGE_OFFSET, 3,
+			 this));
 		}
-		
-		if(asteroids == 5){
-//			addParticipant(new Asteroid(0, 2, EDGE_OFFSET, EDGE_OFFSET, 3, this));
-//			addParticipant(new Asteroid(1, 2, -EDGE_OFFSET, EDGE_OFFSET, 3, this));
-//			addParticipant(new Asteroid(2, 2, EDGE_OFFSET, -EDGE_OFFSET, 3, this));
-//			addParticipant(new Asteroid(3, 2, -EDGE_OFFSET, -EDGE_OFFSET, 3, this));
-//			addParticipant(new Asteroid(0, 2, -EDGE_OFFSET, -EDGE_OFFSET-45, 3, this));
-			addParticipant(new Asteroid(3, 0, -EDGE_OFFSET, -EDGE_OFFSET, 3, this));
+
+		if (asteroids == 5) {
+			 addParticipant(new Asteroid(0, 2, EDGE_OFFSET, EDGE_OFFSET, 3,
+			 this));
+			 addParticipant(new Asteroid(1, 2, -EDGE_OFFSET, EDGE_OFFSET, 3,
+			 this));
+			 addParticipant(new Asteroid(2, 2, EDGE_OFFSET, -EDGE_OFFSET, 3,
+			 this));
+			 addParticipant(new Asteroid(3, 2, -EDGE_OFFSET, -EDGE_OFFSET, 3,
+			 this));
+			 addParticipant(new Asteroid(0, 2, -EDGE_OFFSET, -EDGE_OFFSET-45,
+			 3, this));
+//			addParticipant(
+//					new Asteroid(3, 0, -EDGE_OFFSET, -EDGE_OFFSET, 3, this));
 		}
-		
-		if(asteroids == 6){
-//			addParticipant(new Asteroid(0, 2, EDGE_OFFSET, EDGE_OFFSET, 3, this));
-//			addParticipant(new Asteroid(1, 2, -EDGE_OFFSET, EDGE_OFFSET, 3, this));
-//			addParticipant(new Asteroid(2, 2, EDGE_OFFSET, -EDGE_OFFSET, 3, this));
-//			addParticipant(new Asteroid(3, 2, -EDGE_OFFSET, -EDGE_OFFSET, 3, this));
-//			addParticipant(new Asteroid(0, 2, -EDGE_OFFSET, -EDGE_OFFSET-45, 3, this));
-//			addParticipant(new Asteroid(1, 2, -EDGE_OFFSET, EDGE_OFFSET+45, 3, this));
-			addParticipant(new Asteroid(3, 0, -EDGE_OFFSET, -EDGE_OFFSET, 3, this));
+
+		if (asteroids == 6) {
+			 addParticipant(new Asteroid(0, 2, EDGE_OFFSET, EDGE_OFFSET, 3,
+			 this));
+			 addParticipant(new Asteroid(1, 2, -EDGE_OFFSET, EDGE_OFFSET, 3,
+			 this));
+			 addParticipant(new Asteroid(2, 2, EDGE_OFFSET, -EDGE_OFFSET, 3,
+			 this));
+			 addParticipant(new Asteroid(3, 2, -EDGE_OFFSET, -EDGE_OFFSET, 3,
+			 this));
+			 addParticipant(new Asteroid(0, 2, -EDGE_OFFSET, -EDGE_OFFSET-45,
+			 3, this));
+			 addParticipant(new Asteroid(1, 2, -EDGE_OFFSET, EDGE_OFFSET+45,
+			 3, this));
+//			addParticipant(
+//					new Asteroid(3, 0, -EDGE_OFFSET, -EDGE_OFFSET, 3, this));
 		}
 	}
 
@@ -230,11 +250,12 @@ public class Controller
 		// Clear the screen
 		clear();
 
-		
-
 		// Reset statistics
 		lives = 3;
 		display.setLives(lives);
+		
+		level = 1;
+		points = 0;
 
 		// Start listening to events (but don't listen twice)
 		display.removeKeyListener(this);
@@ -242,7 +263,7 @@ public class Controller
 
 		// Give focus to the game screen
 		display.requestFocusInWindow();
-		
+
 		setUpLevel();
 	}
 
@@ -250,10 +271,8 @@ public class Controller
 	 * Sets differences in level
 	 */
 	private void setUpLevel() {
-		//set text
-		display.setLevel(level);
-	
-		//corresponding level parameters
+
+		// corresponding level parameters
 		if (level == 1) {
 			// Place asteroids
 			placeAsteroids(4);
@@ -262,27 +281,29 @@ public class Controller
 			placeShip();
 
 		}
-		
+
 		if (level == 2) {
 			// Place asteroids
 			placeAsteroids(5);
 
 			// Place the ship
 			placeShip();
-			
-			//TODO: Place alien ship? when shall that be done? 
+
+			// TODO: Place AlienShip, when shall that be done?
 		}
-		
-		if (level == 2) {
+
+		if (level == 3) {
 			// Place asteroids
-			placeAsteroids(5);
+			placeAsteroids(6);
 
 			// Place the ship
 			placeShip();
-			
-			//TODO: Place alien ship? when shall that be done? 
+
+			// TODO: Place alien ship? when shall that be done?
 		}
-		
+		// set text
+		display.setLevel(level);
+
 	}
 
 	/**
@@ -336,7 +357,7 @@ public class Controller
 			}
 			bangSmall.setFramePosition(0);
 			bangSmall.start();
-		}
+		}  
 
 		// Asteroid split functionality
 		/*
@@ -346,27 +367,38 @@ public class Controller
 		 * asteroid collides, it disappears.
 		 */
 		if (asteroid.getSize() == 2) { // If large asteroid is destroyed
-			if (bangMedium.isRunning()) {
-				bangMedium.stop();
-			}
-			bangMedium.setFramePosition(0);
-			bangMedium.start();
-			addParticipant(new Asteroid(2, 1, asteroid.getX(), asteroid.getY(),
-					3, this));
-			addParticipant(new Asteroid(1, 1, asteroid.getX(), asteroid.getY(),
-					3, this));
-		}
-
-		if (asteroid.getSize() == 1) { // If large asteroid is destroyed
 			if (bangLarge.isRunning()) {
 				bangLarge.stop();
 			}
 			bangLarge.setFramePosition(0);
 			bangLarge.start();
+			
+			addParticipant(new Asteroid(2, 1, asteroid.getX(), asteroid.getY(),
+					3, this));
+			addParticipant(new Asteroid(1, 1, asteroid.getX(), asteroid.getY(),
+					3, this));
+		}
+		
+
+		if (asteroid.getSize() == 1) { // If large asteroid is destroyed
+			if (bangMedium.isRunning()) {
+				bangMedium.stop();
+			}
+			bangMedium.setFramePosition(0);
+			bangMedium.start();
+			
 			addParticipant(new Asteroid(0, 0, asteroid.getX(), asteroid.getY(),
 					3, this));
 			addParticipant(new Asteroid(2, 0, asteroid.getX(), asteroid.getY(),
 					3, this));
+		}
+		
+		if (asteroid.getSize() == 0) { // If large asteroid is destroyed
+			if (bangSmall.isRunning()) {
+				bangSmall.stop();
+			}
+			bangLarge.setFramePosition(0);
+			bangLarge.start();
 		}
 	}
 
@@ -425,6 +457,8 @@ public class Controller
 				e1.printStackTrace();
 			}
 		}
+		
+		display.setPoints(points); // make sure our point text is being updated! TODO: theyre all being added twice so?
 
 		// Turning logic
 		if (turningRight && ship != null) {
@@ -436,22 +470,19 @@ public class Controller
 		}
 
 		if (movingForward && ship != null) {
-			// ship.fire(); this causes the flame to be animated the entire time
-			// TODO fix
 			ship.accelerate();
 		}
 
 		// Manages Level variable
-		if (countAsteroids() == 0) {
-			
-			if (level>3) {
+		if (countAsteroids() == 0 && !ship.isExpired()) {
+			if (level > 3) {
 				display.setLegend("You Won!");
-				level=3;
-			}
-			else {
-				level++;
+				level = 3;
+			} else {
 				scheduleTransition(END_DELAY);
+				level++; 
 				setUpLevel();
+
 			}
 		}
 
@@ -498,6 +529,10 @@ public class Controller
 			}
 		}
 		return count;
+	}
+	
+	public void addPoints(int points) {
+		this.points += points;
 	}
 
 	/**

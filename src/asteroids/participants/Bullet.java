@@ -38,10 +38,20 @@ public class Bullet extends Participant implements AsteroidDestroyer {
 	@Override
 	public void collidedWith(Participant p) {
 		if (p instanceof Asteroid) {
+			if (((Asteroid) p).getSize() == 2){
+				controller.addPoints(20);
+			}
+			if (((Asteroid) p).getSize() == 1){
+				controller.addPoints(50);
+			}
+			if (((Asteroid) p).getSize() == 0){
+				controller.addPoints(100);
+			}
 			// Expire the bullet from the game
 			Participant.expire(this);
 			// Tell the controller the asteroid was destroyed
 			controller.asteroidDestroyed((Asteroid)p);
+			
 		}
 	}
 
