@@ -23,24 +23,37 @@ public class AlienShip extends Ship implements ShipDestroyer, AsteroidDestroyer 
     public AlienShip(int x, int y, Controller controller, int size) {
 		super(x, y, 0, controller);
 		this.size = size;
+		Path2D.Double poly = new Path2D.Double();
 		
 		//TODO update outline so it's an alien ship shape, this is still the default ship shape.
         if (size == 1) {
-        	Path2D.Double poly = new Path2D.Double();
-            poly.moveTo(21, 0);
-            poly.lineTo(-21, 12);
-            poly.lineTo(-14, 10);
-            poly.lineTo(-14, -10);
-            poly.lineTo(-21, -12);
+            poly.moveTo(-25, 0);
+            poly.lineTo(-15, 6);
+            poly.lineTo(15, 6);
+            poly.lineTo(25, 0);
+            poly.lineTo(12, -5);
+            poly.lineTo(8, -10);
+            poly.lineTo(-8, -10);
+            poly.lineTo(-12, -5);
+            poly.lineTo(12, -5);
+            poly.lineTo(-12, -5);
+            poly.lineTo(-25, 0);
+            poly.lineTo(25, 0);
             poly.closePath();
             outline = poly;
         } else if (size == 0) {
-        	Path2D.Double poly = new Path2D.Double();
-            poly.moveTo(10, 0);
-            poly.lineTo(-10, 6);
-            poly.lineTo(-7, 5);
-            poly.lineTo(-7, -5);
-            poly.lineTo(-10, -6);
+        	poly.moveTo(-11, 0);
+            poly.lineTo(-7, 3);
+            poly.lineTo(17, 3);
+            poly.lineTo(11, 0);
+            poly.lineTo(6, -2);
+            poly.lineTo(4, -5);
+            poly.lineTo(-4, -5);
+            poly.lineTo(-6, -2);
+            poly.lineTo(6, -2);
+            poly.lineTo(-6, -2);
+            poly.lineTo(-11, 0);
+            poly.lineTo(11, 0);
             poly.closePath();
             outline = poly;
         } 
