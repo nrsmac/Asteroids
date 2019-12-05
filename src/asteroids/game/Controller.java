@@ -54,9 +54,7 @@ public class Controller
 	/** Turning left checked every refresh */
 	private boolean turningLeft = false;
 
-	/**
-	 * Going forward, checked every refresh
-	 */
+	/** Going forward, checked every refresh*/
 	private boolean movingForward;
 
 	/** level */
@@ -93,6 +91,9 @@ public class Controller
 
 		// Set up the refresh timer.
 		refreshTimer = new Timer(FRAME_INTERVAL, this);
+		
+		// Set up the refresh timer.
+		alienTimer = new Timer(6000, this);
 
 		// Clear the transitionTime
 		transitionTime = Long.MAX_VALUE;
@@ -291,8 +292,6 @@ public class Controller
 
 			// Place the ship
 			placeShip();
-
-			// TODO: Place AlienShip, when shall that be done?
   
 			alienTimer.start();
 		}
@@ -303,8 +302,8 @@ public class Controller
 
 			// Place the ship
 			placeShip();
-
-			// TODO: Place alien ship? when shall that be done?
+			
+			alienTimer.start();
 		}
 		// set text
 		display.setLevel(level);
@@ -324,6 +323,11 @@ public class Controller
 	public void shipDestroyed() {
 		// Null out the ship
 		ship = null;
+		
+		//Make sure controls are cleared
+		turningRight = false;
+		turningLeft = false;
+		movingForward = false;
 
 		// Decrement lives
 		lives--;

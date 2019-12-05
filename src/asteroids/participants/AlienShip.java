@@ -43,8 +43,7 @@ public class AlienShip extends Ship implements ShipDestroyer, AsteroidDestroyer 
             poly.lineTo(-10, -6);
             poly.closePath();
             outline = poly;
-        }
-        
+        } 
         setPosition(x, y);
 		setVelocity(3, 0);
 	}
