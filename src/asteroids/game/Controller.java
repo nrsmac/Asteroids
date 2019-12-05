@@ -481,7 +481,7 @@ public class Controller
 				e1.printStackTrace();
 			}
 		} else if (e.getSource() == alienTimer && countAlienShips() == 0) {
-			addParticipant(new AlienShip(50, 50, this, 1));// TODO:Make me show
+			addParticipant(new AlienShip(50, this));// TODO:Make me show
 															// up at a random
 															// location
 		}
