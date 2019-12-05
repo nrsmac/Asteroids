@@ -129,3 +129,8 @@ AsteroidsDemo/sounds/SoundDemo.class
 AsteroidsDemo/sounds/thrust.wav
 AsteroidsDemo/asteroids/destroyers/package-info.class
 *.wav
+AsteroidsDemo/asteroids/game/Controller.class
+AsteroidsDemo/asteroids/game/Display.class
+AsteroidsDemo/asteroids/game/Screen.class
+AsteroidsDemo/asteroids/participants/Bullet.class
+AsteroidsDemo/asteroids/participants/Ship.class
