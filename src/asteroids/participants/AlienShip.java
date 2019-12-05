@@ -1,18 +1,20 @@
 package asteroids.participants;
 
-import static asteroids.game.Constants.RANDOM;
-
 import java.awt.Shape;
 import java.awt.geom.Path2D;
 
+import asteroids.destroyers.AsteroidDestroyer;
 import asteroids.destroyers.ShipDestroyer;
 import asteroids.game.Controller;
 import asteroids.game.Participant;
 
-public class AlienShip extends Ship implements ShipDestroyer {
+public class AlienShip extends Ship implements ShipDestroyer, AsteroidDestroyer {
 	
 	/** The outline of the ship */
     public Shape outline;
+    
+    /** The size of the alien ship, 1 for big, 0 for small */
+    public int size;
 
     /**
      * Constructs a ship at the specified coordinates and with a given size of 1,2 or 3
@@ -20,15 +22,28 @@ public class AlienShip extends Ship implements ShipDestroyer {
     
     public AlienShip(int x, int y, Controller controller, int size) {
 		super(x, y, 0, controller);
+		this.size = size;
+		
 		//TODO update outline so it's an alien ship shape, this is still the default ship shape.
-		Path2D.Double poly = new Path2D.Double();
-        poly.moveTo(21, 0);
-        poly.lineTo(-21, 12);
-        poly.lineTo(-14, 10);
-        poly.lineTo(-14, -10);
-        poly.lineTo(-21, -12);
-        poly.closePath();
-        outline = poly;
+        if (size == 1) {
+        	Path2D.Double poly = new Path2D.Double();
+            poly.moveTo(21, 0);
+            poly.lineTo(-21, 12);
+            poly.lineTo(-14, 10);
+            poly.lineTo(-14, -10);
+            poly.lineTo(-21, -12);
+            poly.closePath();
+            outline = poly;
+        } else if (size == 0) {
+        	Path2D.Double poly = new Path2D.Double();
+            poly.moveTo(10, 0);
+            poly.lineTo(-10, 6);
+            poly.lineTo(-7, 5);
+            poly.lineTo(-7, -5);
+            poly.lineTo(-10, -6);
+            poly.closePath();
+            outline = poly;
+        }
         
         setPosition(x, y);
 		setVelocity(3, 0);
@@ -55,8 +70,11 @@ public class AlienShip extends Ship implements ShipDestroyer {
 
 	@Override
 	public void collidedWith(Participant p) {
-		// TODO Auto-generated method stub
-		
+		Participant.expire(this);		
+	}
+	
+	public int getSize() {
+		return size;
 	}
 
 }

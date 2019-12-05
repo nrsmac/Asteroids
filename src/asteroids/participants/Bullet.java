@@ -53,6 +53,19 @@ public class Bullet extends Participant implements AsteroidDestroyer {
 			controller.asteroidDestroyed((Asteroid)p);
 			
 		}
+		
+		if (p instanceof AlienShip) {
+			if (((AlienShip) p).getSize() == 1){
+				controller.addPoints(200);
+			}
+			if (((AlienShip) p).getSize() == 0){
+				controller.addPoints(50);
+			}
+			// Expire the bullet from the game
+			Participant.expire(p);
+			controller.alienDestroyed((AlienShip) p);
+			
+		}
 	}
 
 	@Override

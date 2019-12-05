@@ -156,7 +156,7 @@ public class Asteroid extends Participant implements ShipDestroyer {
 		if (p instanceof AsteroidDestroyer) {
 			// Expire the asteroid
 			astDeath();
-			Participant.expire(this); //Are both these lines necessary? JD
+			Participant.expire(this); //Are both these lines necessary? JD TODO:Yes
 			Participant.expire(p);
 
 			// Inform the controller

@@ -61,16 +61,15 @@ public class Controller
 
 	/** level */
 	public int level;
-	
+
 	/** points */
 	public int points;
 
 	/** beat timer */
 	Timer beatTimer;
-	
+
 	/** alien timer */
 	Timer alienTimer;
-	
 
 	/** Clip objects */
 	Clip bangAlienShip;
@@ -195,46 +194,46 @@ public class Controller
 
 		if (asteroids == 4) {
 			// TODO: Restore asteroid functionality when done with level stuff
-			 addParticipant(new Asteroid(0, 2, EDGE_OFFSET, EDGE_OFFSET, 3,
-			 this));
-			 addParticipant(new Asteroid(1, 2, -EDGE_OFFSET, EDGE_OFFSET, 3,
-			 this));
-			 addParticipant(new Asteroid(2, 2, EDGE_OFFSET, -EDGE_OFFSET, 3,
-			 this));
-			 addParticipant(new Asteroid(3, 2, -EDGE_OFFSET, -EDGE_OFFSET, 3,
-			 this));
+			addParticipant(
+					new Asteroid(0, 2, EDGE_OFFSET, EDGE_OFFSET, 3, this));
+			addParticipant(
+					new Asteroid(1, 2, -EDGE_OFFSET, EDGE_OFFSET, 3, this));
+			addParticipant(
+					new Asteroid(2, 2, EDGE_OFFSET, -EDGE_OFFSET, 3, this));
+			addParticipant(
+					new Asteroid(3, 2, -EDGE_OFFSET, -EDGE_OFFSET, 3, this));
 		}
 
 		if (asteroids == 5) {
-			 addParticipant(new Asteroid(0, 2, EDGE_OFFSET, EDGE_OFFSET, 3,
-			 this));
-			 addParticipant(new Asteroid(1, 2, -EDGE_OFFSET, EDGE_OFFSET, 3,
-			 this));
-			 addParticipant(new Asteroid(2, 2, EDGE_OFFSET, -EDGE_OFFSET, 3,
-			 this));
-			 addParticipant(new Asteroid(3, 2, -EDGE_OFFSET, -EDGE_OFFSET, 3,
-			 this));
-			 addParticipant(new Asteroid(0, 2, -EDGE_OFFSET, -EDGE_OFFSET-45,
-			 3, this));
-//			addParticipant(
-//					new Asteroid(3, 0, -EDGE_OFFSET, -EDGE_OFFSET, 3, this));
+			addParticipant(
+					new Asteroid(0, 2, EDGE_OFFSET, EDGE_OFFSET, 3, this));
+			addParticipant(
+					new Asteroid(1, 2, -EDGE_OFFSET, EDGE_OFFSET, 3, this));
+			addParticipant(
+					new Asteroid(2, 2, EDGE_OFFSET, -EDGE_OFFSET, 3, this));
+			addParticipant(
+					new Asteroid(3, 2, -EDGE_OFFSET, -EDGE_OFFSET, 3, this));
+			addParticipant(new Asteroid(0, 2, -EDGE_OFFSET, -EDGE_OFFSET - 45,
+					3, this));
+			// addParticipant(
+			// new Asteroid(3, 0, -EDGE_OFFSET, -EDGE_OFFSET, 3, this));
 		}
 
 		if (asteroids == 6) {
-			 addParticipant(new Asteroid(0, 2, EDGE_OFFSET, EDGE_OFFSET, 3,
-			 this));
-			 addParticipant(new Asteroid(1, 2, -EDGE_OFFSET, EDGE_OFFSET, 3,
-			 this));
-			 addParticipant(new Asteroid(2, 2, EDGE_OFFSET, -EDGE_OFFSET, 3,
-			 this));
-			 addParticipant(new Asteroid(3, 2, -EDGE_OFFSET, -EDGE_OFFSET, 3,
-			 this));
-			 addParticipant(new Asteroid(0, 2, -EDGE_OFFSET, -EDGE_OFFSET-45,
-			 3, this));
-			 addParticipant(new Asteroid(1, 2, -EDGE_OFFSET, EDGE_OFFSET+45,
-			 3, this));
-//			addParticipant(
-//					new Asteroid(3, 0, -EDGE_OFFSET, -EDGE_OFFSET, 3, this));
+			addParticipant(
+					new Asteroid(0, 2, EDGE_OFFSET, EDGE_OFFSET, 3, this));
+			addParticipant(
+					new Asteroid(1, 2, -EDGE_OFFSET, EDGE_OFFSET, 3, this));
+			addParticipant(
+					new Asteroid(2, 2, EDGE_OFFSET, -EDGE_OFFSET, 3, this));
+			addParticipant(
+					new Asteroid(3, 2, -EDGE_OFFSET, -EDGE_OFFSET, 3, this));
+			addParticipant(new Asteroid(0, 2, -EDGE_OFFSET, -EDGE_OFFSET - 45,
+					3, this));
+			addParticipant(new Asteroid(1, 2, -EDGE_OFFSET, EDGE_OFFSET + 45, 3,
+					this));
+			// addParticipant(
+			// new Asteroid(3, 0, -EDGE_OFFSET, -EDGE_OFFSET, 3, this));
 		}
 	}
 
@@ -257,8 +256,8 @@ public class Controller
 		// Reset statistics
 		lives = 3;
 		display.setLives(lives);
-		
-		level = 2;//TODO: revert to 1
+
+		level = 2;// TODO: revert to 1
 		points = 0;
 
 		// Start listening to events (but don't listen twice)
@@ -353,7 +352,7 @@ public class Controller
 	/**
 	 * An asteroid has been destroyed
 	 */
-	
+
 	public void asteroidDestroyed(Asteroid asteroid) {
 		// If all the asteroids are gone, schedule a transition
 		// TODO Toggle dust animation here
@@ -364,7 +363,7 @@ public class Controller
 			}
 			bangSmall.setFramePosition(0);
 			bangSmall.start();
-		}  
+		}
 
 		// Asteroid split functionality
 		/*
@@ -379,13 +378,12 @@ public class Controller
 			}
 			bangLarge.setFramePosition(0);
 			bangLarge.start();
-			
+
 			addParticipant(new Asteroid(2, 1, asteroid.getX(), asteroid.getY(),
 					3, this));
 			addParticipant(new Asteroid(1, 1, asteroid.getX(), asteroid.getY(),
 					3, this));
 		}
-		
 
 		if (asteroid.getSize() == 1) { // If large asteroid is destroyed
 			if (bangMedium.isRunning()) {
@@ -393,13 +391,13 @@ public class Controller
 			}
 			bangMedium.setFramePosition(0);
 			bangMedium.start();
-			
+
 			addParticipant(new Asteroid(0, 0, asteroid.getX(), asteroid.getY(),
 					3, this));
 			addParticipant(new Asteroid(2, 0, asteroid.getX(), asteroid.getY(),
 					3, this));
 		}
-		
+
 		if (asteroid.getSize() == 0) { // If large asteroid is destroyed
 			if (bangSmall.isRunning()) {
 				bangSmall.stop();
@@ -415,9 +413,19 @@ public class Controller
 			scheduleTransition(END_DELAY);
 		}
 	}
-	
-	public void genAsteroidDebris(double d, double e)
-	{
+
+	public void alienDestroyed(AlienShip alien) {
+		if (alien.getSize() == 1) {
+			saucerBig.stop();
+		}
+
+		if (alien.getSize() == 0) {
+			saucerSmall.stop();
+		}
+
+	}
+
+	public void genAsteroidDebris(double d, double e) {
 		addParticipant(new AsteroidDebris(d, e));
 	}
 
@@ -468,10 +476,12 @@ public class Controller
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-		}else if (e.getSource() == alienTimer && countAlienShips()==0) {
-			addParticipant(new AlienShip(50, 50, this, 1));//TODO:Make me show up at a random location
+		} else if (e.getSource() == alienTimer && countAlienShips() == 0) {
+			addParticipant(new AlienShip(50, 50, this, 1));// TODO:Make me show
+															// up at a random
+															// location
 		}
-		
+
 		display.setPoints(points); // make sure our point text is being updated!
 
 		// Turning logic
@@ -494,10 +504,23 @@ public class Controller
 				level = 3;
 			} else {
 				scheduleTransition(END_DELAY);
-				level++; 
+				level++;
 				setUpLevel();
 
 			}
+		}
+
+		// Plays alien sounds
+		if (countBigAlienShips() > 0) {
+			saucerBig.loop(Clip.LOOP_CONTINUOUSLY);
+		} else {
+			saucerBig.stop();
+		}
+		
+		if (countSmallAlienShips() > 0) {
+			saucerSmall.loop(Clip.LOOP_CONTINUOUSLY);
+		} else {
+			saucerSmall.stop();
 		}
 
 	}
@@ -531,17 +554,40 @@ public class Controller
 		}
 		return count;
 	}
-	
+
 	/**
-	 * Returns the number of aliens that are active participants
+	 * Returns the number of big aliens that are active participants
 	 */
-	private int countAlienShips() {
+	private int countBigAlienShips() {
 		int count = 0;
 		for (Participant p : this) {
-			if (p instanceof AlienShip) {
+			if (p instanceof AlienShip && ((AlienShip) p).getSize() == 1) {
 				count++;
 			}
 		}
+		return count;
+	}
+
+	/**
+	 * Returns the number of small aliens that are active participants
+	 */
+	private int countSmallAlienShips() {
+		int count = 0;
+		for (Participant p : this) {
+			if (p instanceof AlienShip && ((AlienShip) p).getSize() == 0) {
+				count++;
+			}
+		}
+		return count;
+	}
+
+	/**
+	 * Returns the total number of aliens that are active participants
+	 */
+	private int countAlienShips() {
+		int count = 0;
+		count += countSmallAlienShips();
+		count += countBigAlienShips();
 		return count;
 	}
 
@@ -557,7 +603,7 @@ public class Controller
 		}
 		return count;
 	}
-	
+
 	public void addPoints(int points) {
 		this.points += points;
 	}
