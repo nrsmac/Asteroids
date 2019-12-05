@@ -293,7 +293,7 @@ public class Controller
 			placeShip();
 
 			// TODO: Place AlienShip, when shall that be done?
-			alienTimer = new Timer(5000, this);
+  
 			alienTimer.start();
 		}
 
@@ -365,7 +365,6 @@ public class Controller
 			bangSmall.start();
 		}
 
-		// Asteroid split functionality
 		/*
 		 * When a large asteroid collides with a bullet or a ship, the asteroid
 		 * splits into two medium (1) asteroids. When a medium asteroid
@@ -672,6 +671,7 @@ public class Controller
 
 	@Override
 	public void keyTyped(KeyEvent e) {
+		
 	}
 
 	@Override
