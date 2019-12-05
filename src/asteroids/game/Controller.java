@@ -427,6 +427,10 @@ public class Controller
 
 	public void genAsteroidDebris(double d, double e) {
 		addParticipant(new AsteroidDebris(d, e));
+		addParticipant(new AsteroidDebris(d, e));
+		addParticipant(new AsteroidDebris(d, e));
+		addParticipant(new AsteroidDebris(d, e));
+		
 	}
 
 	/**
