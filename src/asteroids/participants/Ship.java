@@ -77,7 +77,10 @@ public class Ship extends Participant implements AsteroidDestroyer
     @Override
     public void move ()
     {
-        applyFriction(SHIP_FRICTION);
+    	//Dont apply friction if it's an alien ship
+        if (!(this instanceof AlienShip)) {
+        	applyFriction(SHIP_FRICTION);
+        }
         super.move();
 //        TODO: Animate flame behind ship
     }

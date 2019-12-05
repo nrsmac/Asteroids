@@ -4,14 +4,14 @@ import static asteroids.game.Constants.*;
 import java.awt.event.*;
 import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Iterator;
-
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
+
+import asteroids.participants.AlienShip;
 import asteroids.participants.Asteroid;
 import asteroids.participants.AsteroidDebris;
 import asteroids.participants.Bullet;
@@ -67,6 +67,9 @@ public class Controller
 
 	/** beat timer */
 	Timer beatTimer;
+	
+	/** alien timer */
+	Timer alienTimer;
 	
 
 	/** Clip objects */
@@ -255,7 +258,7 @@ public class Controller
 		lives = 3;
 		display.setLives(lives);
 		
-		level = 1;
+		level = 2;//TODO: revert to 1
 		points = 0;
 
 		// Start listening to events (but don't listen twice)
@@ -291,6 +294,8 @@ public class Controller
 			placeShip();
 
 			// TODO: Place AlienShip, when shall that be done?
+			alienTimer = new Timer(5000, this);
+			alienTimer.start();
 		}
 
 		if (level == 3) {
@@ -348,9 +353,10 @@ public class Controller
 	/**
 	 * An asteroid has been destroyed
 	 */
+	
 	public void asteroidDestroyed(Asteroid asteroid) {
 		// If all the asteroids are gone, schedule a transition
-		// TODO Toggle dust animation
+		// TODO Toggle dust animation here
 		if (countAsteroids() == 0) {
 			scheduleTransition(END_DELAY);
 			if (bangSmall.isRunning()) {
@@ -462,9 +468,11 @@ public class Controller
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+		}else if (e.getSource() == alienTimer && countAlienShips()==0) {
+			addParticipant(new AlienShip(50, 50, this, 1));//TODO:Make me show up at a random location
 		}
 		
-		display.setPoints(points); // make sure our point text is being updated! TODO: theyre all being added twice so?
+		display.setPoints(points); // make sure our point text is being updated!
 
 		// Turning logic
 		if (turningRight && ship != null) {
@@ -518,6 +526,19 @@ public class Controller
 		int count = 0;
 		for (Participant p : this) {
 			if (p instanceof Asteroid) {
+				count++;
+			}
+		}
+		return count;
+	}
+	
+	/**
+	 * Returns the number of aliens that are active participants
+	 */
+	private int countAlienShips() {
+		int count = 0;
+		for (Participant p : this) {
+			if (p instanceof AlienShip) {
 				count++;
 			}
 		}

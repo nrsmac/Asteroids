@@ -1,5 +1,7 @@
 package asteroids.participants;
 
+import static asteroids.game.Constants.RANDOM;
+
 import java.awt.Shape;
 import java.awt.geom.Path2D;
 
@@ -27,17 +29,29 @@ public class AlienShip extends Ship implements ShipDestroyer {
         poly.lineTo(-21, -12);
         poly.closePath();
         outline = poly;
-		// TODO Auto-generated constructor stub
-		
-		
+        
+        setPosition(x, y);
+		setVelocity(3, 0);
 	}
+    
+    
 
+    @Override
+	public Shape getOutline ()
+    {
+        return outline;
+    }
+    
 
-	@Override
-	public Shape getOutline() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    /**
+     * Customizes the base move method by imposing friction
+     */
+    @Override
+    public void move ()
+    {
+//    	applyFriction(0.05);
+        super.move();
+    }
 
 	@Override
 	public void collidedWith(Participant p) {
