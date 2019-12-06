@@ -118,7 +118,7 @@ public class ParticipantState implements Iterable<Participant>
                     if (!p2.isExpired() && !p2.isInert() && p1.overlaps(p2))
                     {
                         p1.collidedWith(p2);
-                        p2.collidedWith(p1);
+                        p2.collidedWith(p1); 
                     }
                     if (p1.isExpired())
                         break;

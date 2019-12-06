@@ -32,7 +32,7 @@ public class Asteroids
         else if (choice == 1)
         {
             JOptionPane.showMessageDialog(null, "Sorry, there is no enhanced version");
-            //TODO: Call enhanced version -- duplicate controller/package? So confused.
+            //TODO: Call enhanced version
         }
     }
 }

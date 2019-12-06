@@ -1,9 +1,11 @@
 package asteroids.participants;
 
 import java.awt.Shape;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Path2D;
+import java.util.Random;
 
 import javax.swing.Timer;
 
@@ -24,22 +26,34 @@ public class AlienShip extends Ship
 	/** The size of the alien ship, 1 for big, 0 for small */
 	public int size;
 
+	/** Determines when bullets are fired */
 	Timer bulletTimer;
 
-	/** When this timer goes off, shoots bullet */
+	/** Timer tracks when we change directions in zigzag */
+	Timer zigZagTimer;
+
+	/** tells which direction it's going */
+	int direction;
+
+	/** tells which angle it's going */
+	int angle;
 
 	public final static int LEFT_DIRECTION = 0;
 	public final static int RIGHT_DIRECTION = 1;
 
 	/**
-	 * Constructs a ship at the specified coordinates and with a given size of
-	 * 1,2 or 3
+	 * Constructs a ship at the specified coordinates and with a given size of 0
+	 * or 1
 	 */
+
+	// TODO add random motion (see spec.)
 
 	public AlienShip(int x, int y, Controller controller, int size,
 			int direction) {
 		super(x, y, 0, controller);
 		this.size = size;
+		this.direction = direction;
+		this.angle = 0;
 
 		Path2D.Double poly = new Path2D.Double();
 
@@ -75,17 +89,50 @@ public class AlienShip extends Ship
 			outline = poly;
 		}
 		setPosition(x, y);
-		if (direction == RIGHT_DIRECTION) {
-			setVelocity(3, 0);
-		} else {
-			setVelocity(-3, 0);
-		}
+		generateRandomAngle();
+		setShipVelocity();
 
 		// Start bullet timer
 		bulletTimer = new Timer(2000, this);
 		bulletTimer.start();
+		
+		//Start zigzag timer
+		zigZagTimer = new Timer(500, controller);
+		zigZagTimer.start();
 	}
 
+	/** Sets based on this.direction and this.angle */
+	private void setShipVelocity() {
+		if (this.direction == RIGHT_DIRECTION) {
+			setVelocity(3, angle);
+		} else if (this.direction == LEFT_DIRECTION) {
+			setVelocity(-3, angle);
+		}
+	}
+
+	/**
+	 * gives a random direction between -1rad, 0rad and 1rad
+	 */
+	public void generateRandomAngle() {
+		Random rand = new Random();
+		// If 0 = -1rad, 1 = 0rad and 2 = +1rad
+		int directionValue = rand.nextInt(3);
+		int directionInRadians = 0; // 0rad default
+
+		if (directionValue == 0) {
+			directionInRadians = -1;
+		}
+		if (directionValue == 1) {
+			directionInRadians = 0;
+		}
+		if (directionValue == 2) {
+			directionInRadians = 1;
+		}
+
+		this.angle = directionInRadians; // store to invert for zigzag
+	}
+
+	/** Return alien outline instead of inherited ship outline */
 	@Override
 	public Shape getOutline() {
 		return outline;
@@ -101,9 +148,14 @@ public class AlienShip extends Ship
 
 	@Override
 	public void collidedWith(Participant p) {
-		if (size == 0) controller.genDebris(getX(), getY(), "alienship");
-		else controller.genDebris(getX(), getY(), "alienshipsmall");
-		Participant.expire(this);
+		if (p instanceof Bullet && ((Bullet) p).isAlienBullet == false
+				&& !(p instanceof Debris)) {
+			if (size == 0)
+				controller.genDebris(getX(), getY(), "alienship");
+			else
+				controller.genDebris(getX(), getY(), "alienshipsmall");
+			Participant.expire(this);
+		}
 	}
 
 	public int getSize() {
@@ -112,8 +164,24 @@ public class AlienShip extends Ship
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == bulletTimer && this instanceof AlienShip) {
+		if (e.getSource() == bulletTimer && this instanceof AlienShip
+				&& this.isExpired() == false) {
 			getController().shootAlienBullet(this);
+			bulletTimer = new Timer(2000, this);
+			bulletTimer.start();
+		}
+
+		if (e.getSource() == zigZagTimer) {
+			System.out.println("Im a zigzag timer");
+			if (angle == -1) { // invert angle for zigzag
+				angle = 1;
+				setShipVelocity();
+			} else if (angle == 1) { // invert angle for zigzag
+				angle = -1;
+				setShipVelocity();
+			}
+			zigZagTimer = new Timer(2000, this);
+			zigZagTimer.start();
 		}
 	}
 

@@ -20,6 +20,7 @@ public class Screen extends JPanel {
 	private Controller controller;
 
 	/** Lives */
+	@SuppressWarnings("unused")
 	private int lives;
 
 	/** Lives ship outlines */
@@ -59,7 +60,6 @@ public class Screen extends JPanel {
 
 	public void setLives(int lives) {
 		this.lives = lives;
-
 		livesAvatarArray.clear();
 		for (int i = 0; i < lives; i++) {
 			Ship newShip = new Ship(0, 0, -Math.PI / 2, controller);
@@ -71,7 +71,7 @@ public class Screen extends JPanel {
 			} else {
 				double previousShipX = livesAvatarArray.get(i - 1).getX();
 				double previousShipY = livesAvatarArray.get(i - 1).getY();
-				newShip.setPosition(previousShipX + 40, previousShipY);
+				newShip.setPosition(previousShipX + Constants.SHIP_WIDTH + Constants.SHIP_SEPARATION, previousShipY);
 				newShip.move();
 				livesAvatarArray.add(newShip);
 			}
@@ -113,11 +113,8 @@ public class Screen extends JPanel {
 		if (level != 0) {
 			g.drawString(level + "", SIZE - 30, 50);
 		}
-		
-		
-		
 
-		// Draw ships
+		// Draw ship life avatar
 		for (Ship ship : livesAvatarArray) {
 			ship.draw(g);
 		}

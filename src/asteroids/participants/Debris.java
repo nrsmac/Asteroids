@@ -5,6 +5,8 @@ import static asteroids.game.Constants.RANDOM;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
+
+import asteroids.game.Constants;
 import asteroids.game.Participant;
 import asteroids.game.ParticipantCountdownTimer;
 
@@ -35,7 +37,7 @@ public class Debris extends Participant{
 		setRotation(2 * Math.PI * RANDOM.nextDouble());
 		setPosition(x, y);
 		setInert(true);
-		new ParticipantCountdownTimer(this, "expire", 1400);
+		new ParticipantCountdownTimer(this, "expire", Constants.END_DELAY);
 	}
 	
 	public Shape outlineAsteroid()

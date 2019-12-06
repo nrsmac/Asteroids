@@ -198,13 +198,8 @@ public class Controller
 			if (pDistanceFromAlien > participantsDistance(closestParticipant,
 					alien)) {
 				closestParticipant = p;
-				if (p instanceof Ship) {
-					System.out.println("Ship close!");
-				}
 			}
 		}
-
-
 
 		return closestParticipant.getDirection();
 	}
@@ -309,7 +304,7 @@ public class Controller
 		lives = 3;
 		display.setLives(lives);
 
-		level = 1;
+		level = 2;
 		points = 0;
 
 		// Start listening to events (but don't listen twice)
@@ -334,7 +329,6 @@ public class Controller
 
 			// Place the ship
 			placeShip();
-
 		}
 
 		if (level == 2) {
@@ -356,7 +350,7 @@ public class Controller
 
 			alienTimer.start();
 		}
-		// set text
+		//set text
 		display.setLevel(level);
 
 	}
@@ -395,11 +389,11 @@ public class Controller
 			display.setLegend("Game Over");
 
 		} else {
-			placeShip();
+			// Since the ship was destroyed, schedule a transition
+			scheduleTransition(END_DELAY);
 		}
 
-		// Since the ship was destroyed, schedule a transition
-		scheduleTransition(END_DELAY);
+		
 
 	}
 
@@ -571,7 +565,7 @@ public class Controller
 		}
 
 		// Manages Level variable
-		if (countAsteroids() == 0 && !ship.isExpired()) {
+		if (countAsteroids() == 0 && !ship.isExpired() && countAlienShips() == 0) {
 			if (level > 3) {
 				display.setLegend("You Won!");
 				display.setLevel(3);
@@ -626,7 +620,8 @@ public class Controller
 		if (transitionTime <= System.currentTimeMillis()) {
 			// Clear the transition time
 			transitionTime = Long.MAX_VALUE;
-
+			
+			placeShip();
 			// If there are no lives left, the game is over. Show the final
 			// screen.
 			if (lives <= 0) {

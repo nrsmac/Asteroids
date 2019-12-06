@@ -82,7 +82,6 @@ public class Ship extends Participant implements AsteroidDestroyer
         	applyFriction(SHIP_FRICTION);
         }
         super.move();
-//        TODO: Animate flame behind ship
     }
 
     /**
@@ -161,7 +160,7 @@ public class Ship extends Participant implements AsteroidDestroyer
     @Override
     public void collidedWith (Participant p)
     {
-        if (p instanceof ShipDestroyer)
+        if (p instanceof ShipDestroyer || (p instanceof Bullet && ((Bullet) p).isAlienBullet))
         {
         	controller.genDebris(getX(), getY(), "playership");
             // Expire the ship from the game

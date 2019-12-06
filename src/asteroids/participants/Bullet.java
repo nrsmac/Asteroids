@@ -14,21 +14,21 @@ public class Bullet extends Participant implements AsteroidDestroyer {
 
 	/* Contains the shape */
 	private Shape outline;
-	
+
 	public boolean isAlienBullet = true;
 
 	public Bullet(Ship ship, Controller controller, Double direction) {
-		Ellipse2D.Double poly = new Ellipse2D.Double(0,0,1,1);
+		Ellipse2D.Double poly = new Ellipse2D.Double(0, 0, 1, 1);
 		outline = poly;
 
 		this.controller = controller;
-		 setPosition(ship.getXNose(), ship.getYNose());
-		 if (ship instanceof AlienShip) {
-			 setPosition(ship.getX(), ship.getY());
-		 }
+		setPosition(ship.getXNose(), ship.getYNose());
+		if (ship instanceof AlienShip) {
+			setPosition(ship.getX(), ship.getY());
+		}
 
 		setVelocity(Constants.BULLET_SPEED, direction);
-		
+
 		// // Schedule an acceleration in two seconds
 		// new ParticipantCountdownTimer(this, "move", 100);
 		new ParticipantCountdownTimer(this, "shoot", Constants.BULLET_DURATION);
@@ -36,47 +36,61 @@ public class Bullet extends Participant implements AsteroidDestroyer {
 
 	@Override
 	protected Shape getOutline() {
-		
+
 		return outline;
 	}
 
 	@Override
 	public void collidedWith(Participant p) {
-		if (p instanceof Asteroid) {
-			if (((Asteroid) p).getSize() == 2 && !this.isAlienBullet){
-				controller.addPoints(20);
+		if (!this.isAlienBullet) { //Point funtionality only works if not alien
+			if (p instanceof Asteroid) {
+				if (((Asteroid) p).getSize() == 2 && !this.isAlienBullet) {
+					controller.addPoints(20);
+				}
+				if (((Asteroid) p).getSize() == 1 && !this.isAlienBullet) {
+					controller.addPoints(50);
+				}
+				if (((Asteroid) p).getSize() == 0 && !this.isAlienBullet) {
+					controller.addPoints(100);
+				}
+				// Tell the controller the asteroid was destroyed
+				controller.asteroidDestroyed((Asteroid) p);
+	
 			}
-			if (((Asteroid) p).getSize() == 1 && !this.isAlienBullet){
-				controller.addPoints(50);
+	
+			if (p instanceof AlienShip) {
+				if (((AlienShip) p).getSize() == 1) {
+					controller.addPoints(200);
+				}
+				if (((AlienShip) p).getSize() == 0) {
+					controller.addPoints(50);
+				}
+	
+				if (!isAlienBullet) {
+					// Expire the bullet from the game
+					Participant.expire(p);
+					controller.alienDestroyed((AlienShip) p);
+				}
 			}
-			if (((Asteroid) p).getSize() == 0 && !this.isAlienBullet){
-				controller.addPoints(100);
-			}
-			// Expire the bullet from the game
-			Participant.expire(this);
-			// Tell the controller the asteroid was destroyed
-			controller.asteroidDestroyed((Asteroid)p);
-			
 		}
 		
 		if (p instanceof AlienShip) {
-			if (((AlienShip) p).getSize() == 1){
-				controller.addPoints(200);
-			}
-			if (((AlienShip) p).getSize() == 0){
-				controller.addPoints(50);
-			}
-			
 			if (!isAlienBullet) {
 				// Expire the bullet from the game
 				Participant.expire(p);
 				controller.alienDestroyed((AlienShip) p);
 			}
-			
-			
 		}
+		
+		if (p instanceof Asteroid) {
+			// Tell the controller the asteroid was destroyed
+			controller.asteroidDestroyed((Asteroid) p);
+
+		}
+		// Expire the bullet from the game
+		Participant.expire(this);
 	}
-	
+
 	public void setAlienBullet() {
 		isAlienBullet = true;
 	}
