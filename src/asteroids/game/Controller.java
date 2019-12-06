@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Random;
 
 import javax.sound.sampled.AudioSystem;
@@ -94,8 +95,8 @@ public class Controller
 		// Set up the refresh timer.
 		refreshTimer = new Timer(FRAME_INTERVAL, this);
 
-		// Set up the refresh timer.
-		alienTimer = new Timer(500, this); //TODO make this 6000
+		// Set up the alien timer.
+		alienTimer = new Timer(500, this); // TODO make this ALIEN_DELAY
 
 		// Clear the transitionTime
 		transitionTime = Long.MAX_VALUE;
@@ -107,9 +108,6 @@ public class Controller
 		splashScreen();
 		display.setVisible(true);
 		refreshTimer.start();
-
-		lives = 3;
-		level = 1;
 
 		movingForward = false;
 
@@ -168,12 +166,59 @@ public class Controller
 
 	// Shoots bullets
 	private void shootBullet() {
-		addParticipant(new Bullet(ship, this));
+		addParticipant(new Bullet(ship, this, ship.getRotation()));
 		if (fireClip.isRunning()) {
 			fireClip.stop();
 		}
 		fireClip.setFramePosition(0);
 		fireClip.start();
+	}
+
+	// Shoots Alien bullets
+	public void shootAlienBullet(AlienShip alien) {
+		Bullet bullet = new Bullet(alien, this,
+				getClosestParticipantToAlienDirection(alien));
+		bullet.isAlienBullet = true;
+		addParticipant(bullet);
+		if (fireClip.isRunning()) {
+			fireClip.stop();
+		}
+		fireClip.setFramePosition(0);
+		fireClip.start();
+	}
+
+	private Double getClosestParticipantToAlienDirection(AlienShip alien) {
+		LinkedList<Participant> participants = pstate.getParticipants();
+		Participant closestParticipant = participants.get(0);
+
+		for (Participant p : participants) {
+			double pDistanceFromAlien = participantsDistance(closestParticipant,
+					p);
+			
+			if (pDistanceFromAlien > participantsDistance(closestParticipant,
+					alien)) {
+				closestParticipant = p;
+				if (p instanceof Ship) {
+					System.out.println("Ship close!");
+				}
+			}
+		}
+		
+		
+
+		return closestParticipant.getDirection();
+	}
+
+	private double participantsDistance(Participant p1, Participant p2) {
+		double p1X = p1.getX();
+		double p1Y = p1.getY();
+		double p2X = p2.getX();
+		double p2Y = p2.getY();
+		double pDistanceFromAlien = Math
+				.sqrt(Math.pow((p2X - p1X), 2) + Math.pow((p2Y - p1Y), 2));
+		
+		return pDistanceFromAlien;
+
 	}
 
 	/**
@@ -195,8 +240,12 @@ public class Controller
 	 */
 	private void placeAsteroids(int asteroids) {
 
+		if (asteroids == 1) {
+			addParticipant(
+					new Asteroid(0, 1, EDGE_OFFSET, EDGE_OFFSET, 3, this));
+		}
+		
 		if (asteroids == 4) {
-			// TODO: Restore asteroid functionality when done with level stuff
 			addParticipant(
 					new Asteroid(0, 2, EDGE_OFFSET, EDGE_OFFSET, 3, this));
 			addParticipant(
@@ -260,7 +309,7 @@ public class Controller
 		lives = 3;
 		display.setLives(lives);
 
-		level = 2;// TODO: revert to 1
+		level = 1;
 		points = 0;
 
 		// Start listening to events (but don't listen twice)
@@ -290,7 +339,7 @@ public class Controller
 
 		if (level == 2) {
 			// Place asteroids
-			placeAsteroids(5);
+			placeAsteroids(5); 
 
 			// Place the ship
 			placeShip();
@@ -346,7 +395,6 @@ public class Controller
 			display.setLegend("Game Over");
 
 		} else {
-			// TODO: Make ship burst into dust
 			placeShip();
 		}
 
@@ -369,6 +417,9 @@ public class Controller
 			bangSmall.setFramePosition(0);
 			bangSmall.start();
 		}
+
+		// Expire the asteroid from the game
+		Participant.expire(asteroid);
 
 		/*
 		 * When a large asteroid collides with a bullet or a ship, the asteroid
@@ -411,12 +462,12 @@ public class Controller
 		}
 	}
 
-	public void asteroidDestroyed() {
-		// If all the asteroids are gone, schedule a transition
-		if (countAsteroids() == 0) {
-			scheduleTransition(END_DELAY);
-		}
-	}
+	// public void asteroidDestroyed() {
+	// // If all the asteroids are gone, schedule a transition
+	// if (countAsteroids() == 0) {
+	// scheduleTransition(END_DELAY);
+	// }
+	// }
 
 	public void alienDestroyed(AlienShip alien) {
 		if (alien.getSize() == 1) {
@@ -431,18 +482,17 @@ public class Controller
 
 	public void genDebris(double d, double e, String type) {
 		int numGen = 0;
-		switch (type)
-		{
-		case "asteroid":
-			numGen = 4;
-			break;
-		case "playership": 
-			numGen = 2;
-			addParticipant(new Debris(d, e, "playershipshort"));
-			break;
-		case "alienship":
-			numGen = 6;
-			break;
+		switch (type) {
+			case "asteroid" :
+				numGen = 4;
+				break;
+			case "playership" :
+				numGen = 2;
+				addParticipant(new Debris(d, e, "playershipshort"));
+				break;
+			case "alienship" :
+				numGen = 6;
+				break;
 		}
 		for (int i = 0; i < numGen; i++) {
 			addParticipant(new Debris(d, e, type));
@@ -493,13 +543,13 @@ public class Controller
 				beat2.setFramePosition(0);
 				beat2.start();
 			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-		} else if (e.getSource() == alienTimer && countAlienShips() == 0 && level == 2) {
+		} else if (e.getSource() == alienTimer && countAlienShips() == 0
+				&& level == 2) {
 			placeNewAlienShip(1);
-		}
-		else if (e.getSource() == alienTimer && countAlienShips() == 0 && level == 3 ) {
+		} else if (e.getSource() == alienTimer && countAlienShips() == 0
+				&& level == 3) {
 			placeNewAlienShip(0);
 		}
 
@@ -522,7 +572,7 @@ public class Controller
 		if (countAsteroids() == 0 && !ship.isExpired()) {
 			if (level > 3) {
 				display.setLegend("You Won!");
-				level = 3;
+				display.setLevel(3);
 			} else {
 				scheduleTransition(END_DELAY);
 				level++;
@@ -547,22 +597,22 @@ public class Controller
 	}
 
 	private void placeNewAlienShip(int size) {
-	
+
 		int x;
 		int y;
 		int direction;
-		
+
 		Random rand = new Random();
-		
+
 		y = rand.nextInt((490 - 20) + 1) + 490; // within acceptable x range
-		if(rand.nextInt(2) == 0) {
-			x=0;
+		if (rand.nextInt(2) == 0) {
+			x = 0;
 			direction = AlienShip.RIGHT_DIRECTION;
 		} else {
-			x=SIZE;
+			x = SIZE;
 			direction = AlienShip.LEFT_DIRECTION;
 		}
-		
+
 		addParticipant(new AlienShip(x, y, this, size, direction));
 	}
 

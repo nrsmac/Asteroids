@@ -166,9 +166,23 @@ public class Ship extends Participant implements AsteroidDestroyer
             // Expire the ship from the game
             Participant.expire(this);
 
-            // Tell the controller the ship was destroyed
-            controller.shipDestroyed();
+            
         }
+        
+		if (p instanceof Asteroid) {
+			// Tell the controller the asteroid was destroyed
+			controller.asteroidDestroyed((Asteroid)p);
+			// Tell the controller the ship was destroyed
+            getController().shipDestroyed();
+		}
+		
+		if (p instanceof Bullet) {
+			// Expire the ship from the game
+            Participant.expire(this);
+
+            // Tell the controller the ship was destroyed
+            getController().shipDestroyed();
+		}
     }
     
 
@@ -187,5 +201,9 @@ public class Ship extends Participant implements AsteroidDestroyer
             new ParticipantCountdownTimer(this, "flicker", 100);
         }
     }
+
+	public Controller getController() {
+		return controller;
+	}
 
 }

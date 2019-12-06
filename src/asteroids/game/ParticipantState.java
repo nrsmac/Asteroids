@@ -47,6 +47,10 @@ public class ParticipantState implements Iterable<Participant>
     {
         pendingAdds.add(p);
     }
+    
+    public LinkedList<Participant> getParticipants () {
+		return participants;
+    }
 
     /**
      * Moves each of the active participants to simulate the passage of time.
