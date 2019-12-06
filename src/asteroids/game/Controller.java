@@ -13,8 +13,8 @@ import javax.swing.*;
 
 import asteroids.participants.AlienShip;
 import asteroids.participants.Asteroid;
-import asteroids.participants.AsteroidDebris;
 import asteroids.participants.Bullet;
+import asteroids.participants.Debris;
 import asteroids.participants.Ship;
 
 /**
@@ -428,12 +428,24 @@ public class Controller
 
 	}
 
-	public void genAsteroidDebris(double d, double e) {
-		addParticipant(new AsteroidDebris(d, e));
-		addParticipant(new AsteroidDebris(d, e));
-		addParticipant(new AsteroidDebris(d, e));
-		addParticipant(new AsteroidDebris(d, e));
-		
+	public void genDebris(double d, double e, String type) {
+		int numGen = 0;
+		switch (type)
+		{
+		case "asteroid":
+			numGen = 4;
+			break;
+		case "playership": 
+			numGen = 2;
+			addParticipant(new Debris(d, e, "playershipshort"));
+			break;
+		case "alienship":
+			numGen = 6;
+			break;
+		}
+		for (int i = 0; i < numGen; i++) {
+			addParticipant(new Debris(d, e, type));
+		}
 	}
 
 	/**

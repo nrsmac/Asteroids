@@ -131,15 +131,6 @@ public class Asteroid extends Participant implements ShipDestroyer {
 		outline = poly;
 	}
 	
-	/**
-	 * When the asteroid is "killed", 
-	 * the dust animation will play after
-	 * the main asteroid body is expired.
-	 */
-	private void astDeath()
-	{
-		controller.genAsteroidDebris(getX(), getY());
-	}
 
 	/**
 	 * Returns the size of the asteroid
@@ -154,8 +145,8 @@ public class Asteroid extends Participant implements ShipDestroyer {
 	@Override
 	public void collidedWith(Participant p) {
 		if (p instanceof AsteroidDestroyer) {
-			// Expire the asteroid
-			astDeath();
+			// Expire the asteroid and generate debris
+			controller.genDebris(getX(), getY(), "asteroid");
 			Participant.expire(this); //Are both these lines necessary? JD TODO:Yes
 			Participant.expire(p);
 		}
