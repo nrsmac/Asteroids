@@ -5,6 +5,8 @@ import java.awt.event.*;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Random;
+
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
@@ -93,7 +95,7 @@ public class Controller
 		refreshTimer = new Timer(FRAME_INTERVAL, this);
 
 		// Set up the refresh timer.
-		alienTimer = new Timer(6000, this);
+		alienTimer = new Timer(500, this); //TODO make this 6000
 
 		// Clear the transitionTime
 		transitionTime = Long.MAX_VALUE;
@@ -494,8 +496,11 @@ public class Controller
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-		} else if (e.getSource() == alienTimer && countAlienShips() == 0) {
-			addParticipant(new AlienShip(50, 50, this, 1));// TODO:Make me show up at a random location
+		} else if (e.getSource() == alienTimer && countAlienShips() == 0 && level == 2) {
+			placeNewAlienShip(1);
+		}
+		else if (e.getSource() == alienTimer && countAlienShips() == 0 && level == 3 ) {
+			placeNewAlienShip(0);
 		}
 
 		display.setPoints(points); // make sure our point text is being updated!
@@ -539,6 +544,26 @@ public class Controller
 			saucerSmall.stop();
 		}
 
+	}
+
+	private void placeNewAlienShip(int size) {
+	
+		int x;
+		int y;
+		int direction;
+		
+		Random rand = new Random();
+		
+		y = rand.nextInt((490 - 20) + 1) + 490; // within acceptable x range
+		if(rand.nextInt(2) == 0) {
+			x=0;
+			direction = AlienShip.RIGHT_DIRECTION;
+		} else {
+			x=SIZE;
+			direction = AlienShip.LEFT_DIRECTION;
+		}
+		
+		addParticipant(new AlienShip(x, y, this, size, direction));
 	}
 
 	/**

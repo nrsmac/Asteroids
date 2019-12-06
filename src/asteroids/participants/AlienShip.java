@@ -15,12 +15,15 @@ public class AlienShip extends Ship implements ShipDestroyer, AsteroidDestroyer 
     
     /** The size of the alien ship, 1 for big, 0 for small */
     public int size;
+    
+    public final static int LEFT_DIRECTION = 0;
+    public final static int RIGHT_DIRECTION = 1;
 
     /**
      * Constructs a ship at the specified coordinates and with a given size of 1,2 or 3
      */   
     
-    public AlienShip(int x, int y, Controller controller, int size) {
+    public AlienShip(int x, int y, Controller controller, int size, int direction) {
 		super(x, y, 0, controller);
 		this.size = size;
 		Path2D.Double poly = new Path2D.Double();
@@ -58,7 +61,12 @@ public class AlienShip extends Ship implements ShipDestroyer, AsteroidDestroyer 
             outline = poly;
         } 
         setPosition(x, y);
-		setVelocity(3, 0);
+        if (direction == RIGHT_DIRECTION) {
+        	setVelocity(3, 0);
+        } else {
+        	setVelocity(-3, 0);
+        }
+		
 	}
     
     
