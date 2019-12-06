@@ -18,6 +18,7 @@ public class AlienShip extends Ship implements ShipDestroyer, AsteroidDestroyer 
     
     public final static int LEFT_DIRECTION = 0;
     public final static int RIGHT_DIRECTION = 1;
+    
 
     /**
      * Constructs a ship at the specified coordinates and with a given size of 1,2 or 3
@@ -26,6 +27,7 @@ public class AlienShip extends Ship implements ShipDestroyer, AsteroidDestroyer 
     public AlienShip(int x, int y, Controller controller, int size, int direction) {
 		super(x, y, 0, controller);
 		this.size = size;
+		
 		Path2D.Double poly = new Path2D.Double();
 		
 		//TODO update outline so it's an alien ship shape, this is still the default ship shape.
@@ -90,6 +92,8 @@ public class AlienShip extends Ship implements ShipDestroyer, AsteroidDestroyer 
 
 	@Override
 	public void collidedWith(Participant p) {
+		if (size == 0) controller.genDebris(getX(), getY(), "alienship");
+		else controller.genDebris(getX(), getY(), "alienshipsmall");
 		Participant.expire(this);		
 	}
 	

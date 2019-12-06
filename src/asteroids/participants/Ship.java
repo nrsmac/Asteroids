@@ -17,7 +17,7 @@ public class Ship extends Participant implements AsteroidDestroyer
     public Shape outline;
 
     /** Game controller */
-    private Controller controller;
+    protected Controller controller;
     
     private boolean lit;
 
@@ -163,6 +163,7 @@ public class Ship extends Participant implements AsteroidDestroyer
     {
         if (p instanceof ShipDestroyer)
         {
+        	controller.genDebris(getX(), getY(), "playership");
             // Expire the ship from the game
             Participant.expire(this);
 

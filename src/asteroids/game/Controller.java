@@ -441,11 +441,12 @@ public class Controller
 			addParticipant(new Debris(d, e, "playershipshort"));
 			break;
 		case "alienship":
+		case "alienshipsmall":
 			numGen = 6;
 			break;
 		}
 		for (int i = 0; i < numGen; i++) {
-			addParticipant(new Debris(d, e, type));
+			addParticipant(new Debris(d + i, e + i, type));
 		}
 	}
 

@@ -5,7 +5,6 @@ import static asteroids.game.Constants.RANDOM;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
-
 import asteroids.game.Participant;
 import asteroids.game.ParticipantCountdownTimer;
 
@@ -28,12 +27,15 @@ public class Debris extends Participant{
 		case "alienship":
 			outline = outlineAlienShip();
 			break;
+		case "alienshipsmall":
+			outline = outlineAlienShip();
+			break;
 		}
-		setVelocity(1, RANDOM.nextDouble() * 2 * Math.PI);
+		setVelocity(.2, RANDOM.nextDouble() * 2 * Math.PI);
 		setRotation(2 * Math.PI * RANDOM.nextDouble());
 		setPosition(x, y);
 		setInert(true);
-		new ParticipantCountdownTimer(this, "expire", 800);
+		new ParticipantCountdownTimer(this, "expire", 1400);
 	}
 	
 	public Shape outlineAsteroid()
@@ -45,18 +47,33 @@ public class Debris extends Participant{
 	public Shape outlinePlayerShip()
 	{
 		Path2D.Double poly = new Path2D.Double();
-		
+		poly.moveTo(0, 0);
+		poly.lineTo(24, 0);
 		return poly;
 	}
 	
 	public Shape outlinePlayerShipShort()
 	{
-		return null;
+		Path2D.Double poly = new Path2D.Double();
+		poly.moveTo(0, 0);
+		poly.lineTo(6, 0);
+		return poly;
 	}
 	
 	public Shape outlineAlienShip()
 	{
-		return null;
+		Path2D.Double poly = new Path2D.Double();
+		poly.moveTo(0, 0);
+		poly.lineTo(12, 0);
+		return poly;
+	}
+	
+	public Shape outlineAlienShipSmall()
+	{
+		Path2D.Double poly = new Path2D.Double();
+		poly.moveTo(0, 0);
+		poly.lineTo(6, 0);
+		return poly;
 	}
 
 
