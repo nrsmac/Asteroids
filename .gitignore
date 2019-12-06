@@ -161,3 +161,7 @@ AsteroidsDemo/asteroids/game/Controller.class
 AsteroidsDemo/asteroids/game/Constants.class
 AsteroidsDemo/asteroids/destroyers/ShipDestroyer.class
 AsteroidsDemo/asteroids/destroyers/package-info.class
+AsteroidsDemo/asteroids/participants/Ship.class
+AsteroidsDemo/asteroids/participants/Bullet.class
+AsteroidsDemo/asteroids/game/Screen.class
+AsteroidsDemo/asteroids/game/Controller.class

@@ -373,6 +373,9 @@ public class Controller
 		turningRight = false;
 		turningLeft = false;
 		movingForward = false;
+		
+		//make sure thrust sound doesnt continue
+		thrust.stop();
 
 		// Decrement lives
 		lives--;
@@ -629,6 +632,14 @@ public class Controller
 			}
 		}
 	}
+	
+	private void startThrustSound() {
+		if (ship.lit) {
+			thrust.loop(Clip.LOOP_CONTINUOUSLY);
+		} else {
+			thrust.stop();
+		}
+	}
 
 	/**
 	 * Returns the number of asteroids that are active participants
@@ -729,6 +740,7 @@ public class Controller
 		if ((e.getKeyCode() == KeyEvent.VK_RIGHT
 				|| e.getKeyCode() == KeyEvent.VK_D) && ship != null) {
 			turningRight = true;
+			startThrustSound();
 		}
 		e.getClass();
 		if ((e.getKeyCode() == KeyEvent.VK_LEFT
@@ -744,13 +756,8 @@ public class Controller
 			ship.firing = true;
 			
 			new ParticipantCountdownTimer(ship, "flicker", 50);
-//			ship.drawFlame();
+			startThrustSound();
 			
-			if (thrust.isRunning()) {
-				thrust.stop();
-			}
-			thrust.setFramePosition(0);
-			thrust.start();
 		}
 		if ((e.getKeyCode() == KeyEvent.VK_DOWN
 				|| e.getKeyCode() == KeyEvent.VK_S
@@ -774,6 +781,7 @@ public class Controller
 			movingForward = false;
 			ship.firing = false;
 			ship.lit = false;
+			thrust.stop();
 		}
 		if ((e.getKeyCode() == KeyEvent.VK_RIGHT
 				|| e.getKeyCode() == KeyEvent.VK_D) && ship != null) {

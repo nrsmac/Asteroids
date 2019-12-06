@@ -138,13 +138,6 @@ public class AlienShip extends Ship
 		return outline;
 	}
 
-	/**
-	 * Customizes the base move method by imposing friction
-	 */
-	@Override
-	public void move() {
-		super.move();
-	}
 
 	@Override
 	public void collidedWith(Participant p) {
