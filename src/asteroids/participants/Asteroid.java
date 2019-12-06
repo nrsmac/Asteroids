@@ -149,6 +149,15 @@ public class Asteroid extends Participant implements ShipDestroyer {
 			controller.genDebris(getX(), getY(), "asteroid");
 			Participant.expire(this); //Are both these lines necessary? JD TODO:Yes
 			Participant.expire(p);
+			// Expire the asteroid
+			astDeath();
+			
+			// Tell the controller the ship was destroyed
+            controller.asteroidDestroyed(this);
+			// Expire the ship from the game
+            Participant.expire(this);
+
+            
 		}
 	}
 

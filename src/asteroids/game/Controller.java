@@ -54,7 +54,7 @@ public class Controller
 	/** Turning left checked every refresh */
 	private boolean turningLeft = false;
 
-	/** Going forward, checked every refresh*/
+	/** Going forward, checked every refresh */
 	private boolean movingForward;
 
 	/** level */
@@ -91,7 +91,7 @@ public class Controller
 
 		// Set up the refresh timer.
 		refreshTimer = new Timer(FRAME_INTERVAL, this);
-		
+
 		// Set up the refresh timer.
 		alienTimer = new Timer(6000, this);
 
@@ -292,7 +292,7 @@ public class Controller
 
 			// Place the ship
 			placeShip();
-  
+
 			alienTimer.start();
 		}
 
@@ -302,7 +302,7 @@ public class Controller
 
 			// Place the ship
 			placeShip();
-			
+
 			alienTimer.start();
 		}
 		// set text
@@ -323,8 +323,8 @@ public class Controller
 	public void shipDestroyed() {
 		// Null out the ship
 		ship = null;
-		
-		//Make sure controls are cleared
+
+		// Make sure controls are cleared
 		turningRight = false;
 		turningLeft = false;
 		movingForward = false;
@@ -359,7 +359,6 @@ public class Controller
 
 	public void asteroidDestroyed(Asteroid asteroid) {
 		// If all the asteroids are gone, schedule a transition
-		// TODO Toggle dust animation here
 		if (countAsteroids() == 0) {
 			scheduleTransition(END_DELAY);
 			if (bangSmall.isRunning()) {
@@ -496,9 +495,7 @@ public class Controller
 				e1.printStackTrace();
 			}
 		} else if (e.getSource() == alienTimer && countAlienShips() == 0) {
-			addParticipant(new AlienShip(50, 50, this, 1));// TODO:Make me show
-															// up at a random
-															// location
+			addParticipant(new AlienShip(50, 50, this, 1));// TODO:Make me show up at a random location
 		}
 
 		display.setPoints(points); // make sure our point text is being updated!
@@ -535,7 +532,7 @@ public class Controller
 		} else {
 			saucerBig.stop();
 		}
-		
+
 		if (countSmallAlienShips() > 0) {
 			saucerSmall.loop(Clip.LOOP_CONTINUOUSLY);
 		} else {
@@ -687,7 +684,7 @@ public class Controller
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		
+
 	}
 
 	@Override
