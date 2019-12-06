@@ -19,7 +19,9 @@ public class Ship extends Participant implements AsteroidDestroyer
     /** Game controller */
     protected Controller controller;
     
-    private boolean lit;
+    public boolean lit;
+    
+    public boolean firing;
 
     /**
      * Constructs a ship at the specified coordinates that is pointed in the given direction.
@@ -40,8 +42,9 @@ public class Ship extends Participant implements AsteroidDestroyer
         outline = poly;
 
         lit = false;
+        firing = false;
         // Schedule an acceleration in two seconds
-        new ParticipantCountdownTimer(this, "flicker", 1);
+//        new ParticipantCountdownTimer(this, "flicker", 100);
     }
 
     /**
@@ -128,7 +131,6 @@ public class Ship extends Participant implements AsteroidDestroyer
         poly.lineTo(-21, -12);
         poly.closePath();
         outline = poly;
-        lit = true;
     }
 
     /**
@@ -144,15 +146,18 @@ public class Ship extends Participant implements AsteroidDestroyer
         poly.lineTo(-21, -12);
         poly.closePath();
         outline = poly;
-        lit = false;
     }
 
     public void showFlame()
     {
-    	if (lit)
+    	if (lit) {
     		drawFlame();
-    	else
+    		lit = false;
+    	}
+    	else {
     		undrawFlame();
+    		lit = true;
+    	}
     }
 
     /**
@@ -195,11 +200,13 @@ public class Ship extends Participant implements AsteroidDestroyer
     {
         if (payload.equals("flicker"))
         {
-        	if (lit)
-        		lit = false;
-        	else
-        		lit = true;
-            new ParticipantCountdownTimer(this, "flicker", 100);
+        	showFlame();
+        	if (firing) {
+        		new ParticipantCountdownTimer(this, "flicker", 50);
+        	}
+        	else 
+        		undrawFlame();
+            
         }
     }
 

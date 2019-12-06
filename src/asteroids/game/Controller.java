@@ -724,6 +724,7 @@ public class Controller
 			return null;
 		}
 	}
+	
 
 	/**
 	 * If a key of interest is pressed, record that it is down.
@@ -742,7 +743,14 @@ public class Controller
 		if ((e.getKeyCode() == KeyEvent.VK_UP
 				|| e.getKeyCode() == KeyEvent.VK_W) && ship != null) {
 			movingForward = true;
-			ship.showFlame();
+			
+			
+			ship.lit = true;
+			ship.firing = true;
+			
+			new ParticipantCountdownTimer(ship, "flicker", 50);
+//			ship.drawFlame();
+			
 			if (thrust.isRunning()) {
 				thrust.stop();
 			}
@@ -769,6 +777,8 @@ public class Controller
 		if ((e.getKeyCode() == KeyEvent.VK_UP
 				|| e.getKeyCode() == KeyEvent.VK_W) && ship != null) {
 			movingForward = false;
+			ship.firing = false;
+			ship.lit = false;
 		}
 		if ((e.getKeyCode() == KeyEvent.VK_RIGHT
 				|| e.getKeyCode() == KeyEvent.VK_D) && ship != null) {
