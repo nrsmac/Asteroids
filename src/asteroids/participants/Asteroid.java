@@ -10,7 +10,7 @@ import asteroids.game.Participant;
 
 /**
  * Represents asteroids
- * 
+ *
  * @param int
  *            variety
  * @param int
@@ -36,12 +36,12 @@ public class Asteroid extends Participant implements ShipDestroyer {
 
 	/**
 	 * Throws an IllegalArgumentException if size or variety is out of range.
-	 * 
+	 *
 	 * Creates an asteroid of the specified variety (0 through 3) and size (0 =
 	 * small, 1 = medium, 2 = large) and positions it at the provided
 	 * coordinates with a random rotation. Its velocity has the given speed but
 	 * is in a random direction.
-	 * 
+	 *
 	 */
 	public Asteroid(int variety, int size, double x, double y, int speed,
 			Controller controller) {
@@ -130,7 +130,7 @@ public class Asteroid extends Participant implements ShipDestroyer {
 		// Save the outline
 		outline = poly;
 	}
-	
+
 
 	/**
 	 * Returns the size of the asteroid
@@ -148,6 +148,7 @@ public class Asteroid extends Participant implements ShipDestroyer {
 			// Expire the asteroid and generate debris
 			controller.genDebris(getX(), getY(), "asteroid");
 			Participant.expire(p);
+
 			// Tell the controller the ship was destroyed
 //            controller.asteroidDestroyed(this);
 		}

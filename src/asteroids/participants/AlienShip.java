@@ -40,6 +40,7 @@ public class AlienShip extends Ship
 			int direction) {
 		super(x, y, 0, controller);
 		this.size = size;
+
 		Path2D.Double poly = new Path2D.Double();
 
 		if (size == 1) { // big alien outline
@@ -100,9 +101,9 @@ public class AlienShip extends Ship
 
 	@Override
 	public void collidedWith(Participant p) {
-		if (p instanceof Bullet && !((Bullet) p).isAlienBullet) {
-			Participant.expire(this);
-		}
+		if (size == 0) controller.genDebris(getX(), getY(), "alienship");
+		else controller.genDebris(getX(), getY(), "alienshipsmall");
+		Participant.expire(this);
 	}
 
 	public int getSize() {

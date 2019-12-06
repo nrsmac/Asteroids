@@ -194,7 +194,7 @@ public class Controller
 		for (Participant p : participants) {
 			double pDistanceFromAlien = participantsDistance(closestParticipant,
 					p);
-			
+
 			if (pDistanceFromAlien > participantsDistance(closestParticipant,
 					alien)) {
 				closestParticipant = p;
@@ -203,8 +203,8 @@ public class Controller
 				}
 			}
 		}
-		
-		
+
+
 
 		return closestParticipant.getDirection();
 	}
@@ -216,7 +216,7 @@ public class Controller
 		double p2Y = p2.getY();
 		double pDistanceFromAlien = Math
 				.sqrt(Math.pow((p2X - p1X), 2) + Math.pow((p2Y - p1Y), 2));
-		
+
 		return pDistanceFromAlien;
 
 	}
@@ -244,7 +244,7 @@ public class Controller
 			addParticipant(
 					new Asteroid(0, 1, EDGE_OFFSET, EDGE_OFFSET, 3, this));
 		}
-		
+
 		if (asteroids == 4) {
 			addParticipant(
 					new Asteroid(0, 2, EDGE_OFFSET, EDGE_OFFSET, 3, this));
@@ -339,7 +339,7 @@ public class Controller
 
 		if (level == 2) {
 			// Place asteroids
-			placeAsteroids(5); 
+			placeAsteroids(5);
 
 			// Place the ship
 			placeShip();
@@ -482,20 +482,22 @@ public class Controller
 
 	public void genDebris(double d, double e, String type) {
 		int numGen = 0;
-		switch (type) {
-			case "asteroid" :
-				numGen = 4;
-				break;
-			case "playership" :
-				numGen = 2;
-				addParticipant(new Debris(d, e, "playershipshort"));
-				break;
-			case "alienship" :
-				numGen = 6;
-				break;
+		switch (type)
+		{
+		case "asteroid":
+			numGen = 4;
+			break;
+		case "playership":
+			numGen = 2;
+			addParticipant(new Debris(d, e, "playershipshort"));
+			break;
+		case "alienship":
+		case "alienshipsmall":
+			numGen = 6;
+			break;
 		}
 		for (int i = 0; i < numGen; i++) {
-			addParticipant(new Debris(d, e, type));
+			addParticipant(new Debris(d + i, e + i, type));
 		}
 	}
 
