@@ -76,7 +76,7 @@ public class AlienShip extends Ship
 		} else if (size == 0) { // Small Outline
 			poly.moveTo(-11, 0);
 			poly.lineTo(-7, 3);
-			poly.lineTo(17, 3);
+			poly.lineTo(7, 3);
 			poly.lineTo(11, 0);
 			poly.lineTo(6, -2);
 			poly.lineTo(4, -5);
