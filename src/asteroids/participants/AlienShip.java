@@ -47,8 +47,6 @@ public class AlienShip extends Ship
 	 * or 1
 	 */
 
-	// TODO add random motion (see spec.)
-
 	public AlienShip(int x, int y, Controller controller, int size,
 			int direction) {
 		super(x, y, 0, controller);
