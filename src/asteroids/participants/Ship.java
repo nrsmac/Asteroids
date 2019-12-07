@@ -169,8 +169,6 @@ public class Ship extends Participant implements AsteroidDestroyer
         {
         	controller.genDebris(getX(), getY(), "playership");
             Participant.expire(this);
-
-            
         }
         
 		if (p instanceof Asteroid) {
@@ -183,8 +181,8 @@ public class Ship extends Participant implements AsteroidDestroyer
 		if (p instanceof Bullet) {
 			// Expire the ship from the game
             Participant.expire(this);
-
             // Tell the controller the ship was destroyed
+        	controller.genDebris(getX(), getY(), "playership");
             getController().shipDestroyed();
 		}
     }
