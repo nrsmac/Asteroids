@@ -149,8 +149,6 @@ public class Asteroid extends Participant implements ShipDestroyer {
 			controller.genDebris(getX(), getY(), "asteroid");
 			Participant.expire(p);
 
-			// Tell the controller the ship was destroyed
-//            controller.asteroidDestroyed(this);
 		}
 	}
 

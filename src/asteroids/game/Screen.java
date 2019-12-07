@@ -109,7 +109,7 @@ public class Screen extends JPanel {
 		// Draw Other non-participant screen components
 		Font smallFont = new Font("Monospace", Font.PLAIN, 40);
 		g.setFont(smallFont);
-		g.drawString(points + "", 80, 40);
+		g.drawString(points + "", 55, 40);
 		if (level != 0) {
 			g.drawString(level + "", SIZE - 30, 50);
 		}
@@ -122,7 +122,6 @@ public class Screen extends JPanel {
 
 	public void setPoints(int points) {
 		this.points = points;
-		
 	}
 
 }

@@ -76,11 +76,6 @@ public class Bullet extends Participant implements AsteroidDestroyer {
 			}
 		}
 		
-		if (p instanceof Asteroid) {
-			// Tell the controller the asteroid was destroyed
-			controller.asteroidDestroyed((Asteroid) p);
-
-		}
 		// Expire the bullet from the game
 		Participant.expire(this);
 	}

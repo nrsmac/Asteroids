@@ -177,7 +177,7 @@ public class Controller
 	// Shoots Big Alien bullets
 	public void shootBigAlienBullet(AlienShip alien) {
 		Bullet bullet = new Bullet(alien, this,
-				getClosestParticipantToAlienDirection(alien));
+				alien.getRelativeAngle(getClosestParticipantToAlien(alien)));
 		bullet.isAlienBullet = true;
 		addParticipant(bullet);
 		if (fireClip.isRunning()) {
@@ -186,25 +186,25 @@ public class Controller
 		fireClip.setFramePosition(0);
 		fireClip.start();
 	}
-	
-	// Shoots Big Alien bullets
-		public void shootSmallAlienBullet(AlienShip alien) {
-			if (fireClip.isRunning()) {
-				fireClip.stop();
-			}
-			try {
-				Bullet bullet = null;
-				bullet = new Bullet(alien, this, ship.getRelativeAngle(alien));
-				bullet.isAlienBullet = true;
-				addParticipant(bullet);
-				fireClip.setFramePosition(0);
-				fireClip.start();
-			} catch (Exception e) {
-				
-			}
-		}
 
-	private Double getClosestParticipantToAlienDirection(AlienShip alien) {
+	// Shoots Big Alien bullets
+	public void shootSmallAlienBullet(AlienShip alien) {
+		if (fireClip.isRunning()) {
+			fireClip.stop();
+		}
+		try {
+			Bullet bullet = null;
+			bullet = new Bullet(alien, this, ship.getRelativeAngle(alien));
+			bullet.isAlienBullet = true;
+			addParticipant(bullet);
+			fireClip.setFramePosition(0);
+			fireClip.start();
+		} catch (Exception e) {
+
+		}
+	}
+
+	private Participant getClosestParticipantToAlien(AlienShip alien) {
 		LinkedList<Participant> participants = pstate.getParticipants();
 		Participant closestParticipant = participants.get(0);
 
@@ -218,9 +218,8 @@ public class Controller
 			}
 		}
 
-		return closestParticipant.getDirection();
+		return closestParticipant;
 	}
-	
 
 	private double participantsDistance(Participant p1, Participant p2) {
 		double p1X = p1.getX();
@@ -351,7 +350,7 @@ public class Controller
 
 		if (level == 2) {
 			// Place asteroids
-			placeAsteroids(1); // TODO make 5
+			placeAsteroids(5);
 
 			// Place the ship
 			placeShip();
@@ -368,7 +367,7 @@ public class Controller
 
 			alienTimer.start();
 		}
-		//set text
+		// set text
 		display.setLevel(level);
 
 	}
@@ -391,8 +390,8 @@ public class Controller
 		turningRight = false;
 		turningLeft = false;
 		movingForward = false;
-		
-		//make sure thrust sound doesnt continue
+
+		// make sure thrust sound doesnt continue
 		thrust.stop();
 
 		// Decrement lives
@@ -406,15 +405,18 @@ public class Controller
 		bangShip.start();
 
 		if (lives <= 0) {
-			// Display a legend
+			// Keep it quiet as to not rub it in their face and stop making aliens
+			saucerBig.stop();
+			saucerSmall.stop();
+			alienTimer.stop();
+			
+			//Set legend
 			display.setLegend("Game Over");
 
 		} else {
 			// Since the ship was destroyed, schedule a transition
 			scheduleTransition(END_DELAY);
 		}
-
-		
 
 	}
 
@@ -485,14 +487,9 @@ public class Controller
 	// }
 
 	public void alienDestroyed(AlienShip alien) {
-		if (alien.getSize() == 1) {
-			saucerBig.stop();
-		}
+		saucerBig.stop();
+		saucerSmall.stop();
 
-		if (alien.getSize() == 0) {
-			saucerSmall.stop();
-		}
-		
 		if (alien.size == 1)
 			genDebris(alien.getX(), alien.getY(), "alienship");
 		else
@@ -502,19 +499,18 @@ public class Controller
 
 	public void genDebris(double d, double e, String type) {
 		int numGen = 0;
-		switch (type)
-		{
-		case "asteroid":
-			numGen = 4;
-			break;
-		case "playership":
-			numGen = 2;
-			addParticipant(new Debris(d, e, "playershipshort"));
-			break;
-		case "alienship":
-		case "alienshipsmall":
-			numGen = 6;
-			break;
+		switch (type) {
+			case "asteroid" :
+				numGen = 4;
+				break;
+			case "playership" :
+				numGen = 2;
+				addParticipant(new Debris(d, e, "playershipshort"));
+				break;
+			case "alienship" :
+			case "alienshipsmall" :
+				numGen = 6;
+				break;
 		}
 		for (int i = 0; i < numGen; i++) {
 			addParticipant(new Debris(d + i, e + i, type));
@@ -591,7 +587,8 @@ public class Controller
 		}
 
 		// Manages Level variable
-		if (countAsteroids() == 0 && !ship.isExpired() && countAlienShips() == 0) {
+		if (countAsteroids() == 0 && !ship.isExpired()
+				&& countAlienShips() == 0) {
 			if (level > 3) {
 				display.setLegend("You Won!");
 				display.setLevel(3);
@@ -646,8 +643,8 @@ public class Controller
 		if (transitionTime <= System.currentTimeMillis()) {
 			// Clear the transition time
 			transitionTime = Long.MAX_VALUE;
-			
-			placeShip(); 
+
+			placeShip();
 			// If there are no lives left, the game is over. Show the final
 			// screen.
 			if (lives <= 0) {
@@ -655,7 +652,7 @@ public class Controller
 			}
 		}
 	}
-	
+
 	private void startThrustSound() {
 		if (ship.lit) {
 			thrust.loop(Clip.LOOP_CONTINUOUSLY);
@@ -753,7 +750,6 @@ public class Controller
 			return null;
 		}
 	}
-	
 
 	/**
 	 * If a key of interest is pressed, record that it is down.
@@ -773,14 +769,13 @@ public class Controller
 		if ((e.getKeyCode() == KeyEvent.VK_UP
 				|| e.getKeyCode() == KeyEvent.VK_W) && ship != null) {
 			movingForward = true;
-			
-			
+
 			ship.lit = true;
 			ship.firing = true;
-			
+
 			new ParticipantCountdownTimer(ship, "flicker", 50);
 			startThrustSound();
-			
+
 		}
 		if ((e.getKeyCode() == KeyEvent.VK_DOWN
 				|| e.getKeyCode() == KeyEvent.VK_S

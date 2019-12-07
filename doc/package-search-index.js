@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"asteroids.destroyers"},{"l":"asteroids.game"},{"l":"asteroids.participants"},{"l":"sounds"}]
