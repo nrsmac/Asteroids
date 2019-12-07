@@ -12,8 +12,13 @@ import asteroids.game.ParticipantCountdownTimer;
 
 public class Debris extends Participant{
 	
+	/**The outline of the debris, based on which entity it was created from*/
 	private Shape outline;
 
+	/**
+	 * Constructs a piece of debris with random velocity and rotation 
+	 * from one of the possible units upon whose "death" debris may be generated.
+	 */
 	public Debris(double x, double y, String type) {
 		super();
 		switch (type)
@@ -40,12 +45,18 @@ public class Debris extends Participant{
 		new ParticipantCountdownTimer(this, "expire", Constants.END_DELAY);
 	}
 	
+	/**
+	 * Returns the shape of asteroid debris
+	 */
 	public Shape outlineAsteroid()
 	{ 
 		Ellipse2D.Double poly = new Ellipse2D.Double(0,0,1,1);
 		return poly;
 	}
 	
+	/**
+	 * Returns the shape of the player ship debris (long segment)
+	 */
 	public Shape outlinePlayerShip()
 	{
 		Path2D.Double poly = new Path2D.Double();
@@ -54,6 +65,9 @@ public class Debris extends Participant{
 		return poly;
 	}
 	
+	/**
+	 * Returns the shape of the player ship debris (short segment)
+	 */
 	public Shape outlinePlayerShipShort()
 	{
 		Path2D.Double poly = new Path2D.Double();
@@ -62,6 +76,9 @@ public class Debris extends Participant{
 		return poly;
 	}
 	
+	/**
+	 * Returns the shape of an alien ship debris segment
+	 */
 	public Shape outlineAlienShip()
 	{
 		Path2D.Double poly = new Path2D.Double();
@@ -70,6 +87,9 @@ public class Debris extends Participant{
 		return poly;
 	}
 	
+	/**
+	 * Returns the shape of an alien ship small debris segment
+	 */
 	public Shape outlineAlienShipSmall()
 	{
 		Path2D.Double poly = new Path2D.Double();
@@ -78,7 +98,9 @@ public class Debris extends Participant{
 		return poly;
 	}
 
-
+	/**
+	 * Expires the debris when the countdown timer triggers, set in the constructor
+	 */
 	@Override
 	public void countdownComplete(Object payload)
 	{

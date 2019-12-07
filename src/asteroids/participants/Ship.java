@@ -19,8 +19,10 @@ public class Ship extends Participant implements AsteroidDestroyer
     /** Game controller */
     protected Controller controller;
     
+    /**Whether the flame should be drawn i.e., engine flame is lit*/
     public boolean lit;
     
+    /**Whether the ship's engines are firing*/
     public boolean firing;
 
     /**
@@ -147,6 +149,9 @@ public class Ship extends Participant implements AsteroidDestroyer
         outline = poly;
     }
 
+    /**
+     * Draws the ship with the flame and without the flame, deciding and switching on activation
+     */
     public void showFlame()
     {
     	if (lit) {
