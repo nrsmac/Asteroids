@@ -141,12 +141,21 @@ public class AlienShip extends Ship
 
 	@Override
 	public void collidedWith(Participant p) {
-		if (p instanceof Bullet && ((Bullet) p).isAlienBullet == false
-				&& !(p instanceof Debris)) {
+
+		if (p instanceof Bullet && ((Bullet) p).isAlienBullet == true) {
 			if (size == 1)
 				controller.genDebris(getX(), getY(), "alienship");
 			else
 				controller.genDebris(getX(), getY(), "alienshipsmall");
+			controller.alienDestroyed(this);
+			Participant.expire(this);
+		}
+		if (p instanceof Ship) {
+			if (size == 1)
+				controller.genDebris(getX(), getY(), "alienship");
+			else
+				controller.genDebris(getX(), getY(), "alienshipsmall");
+			controller.alienDestroyed(this);
 			Participant.expire(this);
 		}
 	}

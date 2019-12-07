@@ -15,7 +15,7 @@ public class Bullet extends Participant implements AsteroidDestroyer {
 	/* Contains the shape */
 	private Shape outline;
 
-	public boolean isAlienBullet = true;
+	public boolean isAlienBullet = false;
 
 	public Bullet(Ship ship, Controller controller, Double direction) {
 		Ellipse2D.Double poly = new Ellipse2D.Double(0, 0, 1, 1);

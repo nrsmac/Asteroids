@@ -322,7 +322,7 @@ public class Controller
 		lives = 3;
 		display.setLives(lives);
 
-		level = 3;
+		level = 2;
 		points = 0;
 
 		// Start listening to events (but don't listen twice)
@@ -351,7 +351,7 @@ public class Controller
 
 		if (level == 2) {
 			// Place asteroids
-			placeAsteroids(5); 
+			placeAsteroids(1); // TODO make 5
 
 			// Place the ship
 			placeShip();
@@ -361,7 +361,7 @@ public class Controller
 
 		if (level == 3) {
 			// Place asteroids
-			placeAsteroids(1);// TODO make 6
+			placeAsteroids(6);
 
 			// Place the ship
 			placeShip();
