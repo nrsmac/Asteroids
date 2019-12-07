@@ -165,10 +165,9 @@ public class Ship extends Participant implements AsteroidDestroyer
     @Override
     public void collidedWith (Participant p)
     {
-        if (p instanceof ShipDestroyer && (p instanceof Bullet && ((Bullet) p).isAlienBullet))
+        if (p instanceof ShipDestroyer && (p instanceof Bullet))
         {
         	controller.genDebris(getX(), getY(), "playership");
-            // Expire the ship from the game
             Participant.expire(this);
 
             

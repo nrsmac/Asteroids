@@ -159,4 +159,9 @@ public class Constants
      * Distance between ships when used to display lives
      */
     public final static int SHIP_SEPARATION = 6;
+
+    /**
+     * Time when alien zigzag changes angle in zigzag
+     */
+	public static final int ALIEN_ZIGZAG = 2000;
 }

@@ -174,8 +174,8 @@ public class Controller
 		fireClip.start();
 	}
 
-	// Shoots Alien bullets
-	public void shootAlienBullet(AlienShip alien) {
+	// Shoots Big Alien bullets
+	public void shootBigAlienBullet(AlienShip alien) {
 		Bullet bullet = new Bullet(alien, this,
 				getClosestParticipantToAlienDirection(alien));
 		bullet.isAlienBullet = true;
@@ -186,6 +186,23 @@ public class Controller
 		fireClip.setFramePosition(0);
 		fireClip.start();
 	}
+	
+	// Shoots Big Alien bullets
+		public void shootSmallAlienBullet(AlienShip alien) {
+			if (fireClip.isRunning()) {
+				fireClip.stop();
+			}
+			try {
+				Bullet bullet = null;
+				bullet = new Bullet(alien, this, ship.getRelativeAngle(alien));
+				bullet.isAlienBullet = true;
+				addParticipant(bullet);
+				fireClip.setFramePosition(0);
+				fireClip.start();
+			} catch (Exception e) {
+				
+			}
+		}
 
 	private Double getClosestParticipantToAlienDirection(AlienShip alien) {
 		LinkedList<Participant> participants = pstate.getParticipants();
@@ -203,6 +220,7 @@ public class Controller
 
 		return closestParticipant.getDirection();
 	}
+	
 
 	private double participantsDistance(Participant p1, Participant p2) {
 		double p1X = p1.getX();
@@ -304,7 +322,7 @@ public class Controller
 		lives = 3;
 		display.setLives(lives);
 
-		level = 2;
+		level = 3;
 		points = 0;
 
 		// Start listening to events (but don't listen twice)
@@ -333,7 +351,7 @@ public class Controller
 
 		if (level == 2) {
 			// Place asteroids
-			placeAsteroids(5);
+			placeAsteroids(5); 
 
 			// Place the ship
 			placeShip();
@@ -343,7 +361,7 @@ public class Controller
 
 		if (level == 3) {
 			// Place asteroids
-			placeAsteroids(6);
+			placeAsteroids(1);// TODO make 6
 
 			// Place the ship
 			placeShip();

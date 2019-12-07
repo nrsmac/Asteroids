@@ -11,6 +11,7 @@ import javax.swing.Timer;
 
 import asteroids.destroyers.AsteroidDestroyer;
 import asteroids.destroyers.ShipDestroyer;
+import asteroids.game.Constants;
 import asteroids.game.Controller;
 import asteroids.game.Participant;
 
@@ -95,9 +96,9 @@ public class AlienShip extends Ship
 		// Start bullet timer
 		bulletTimer = new Timer(2000, this);
 		bulletTimer.start();
-		
-		//Start zigzag timer
-		zigZagTimer = new Timer(500, controller);
+
+		// Start zigzag timer
+		zigZagTimer = new Timer(Constants.ALIEN_ZIGZAG, this);
 		zigZagTimer.start();
 	}
 
@@ -138,12 +139,11 @@ public class AlienShip extends Ship
 		return outline;
 	}
 
-
 	@Override
 	public void collidedWith(Participant p) {
 		if (p instanceof Bullet && ((Bullet) p).isAlienBullet == false
 				&& !(p instanceof Debris)) {
-			if (size == 0)
+			if (size == 1)
 				controller.genDebris(getX(), getY(), "alienship");
 			else
 				controller.genDebris(getX(), getY(), "alienshipsmall");
@@ -159,21 +159,28 @@ public class AlienShip extends Ship
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == bulletTimer && this instanceof AlienShip
 				&& this.isExpired() == false) {
-			getController().shootAlienBullet(this);
+
+			// Shoot different behaving bullet depending on size
+			if (this.size == 1) {
+				getController().shootBigAlienBullet(this);
+			} else if (this.size == 0) {
+				getController().shootSmallAlienBullet(this);
+			}
+			// Set new timer for next shoot
 			bulletTimer = new Timer(2000, this);
 			bulletTimer.start();
 		}
 
-		if (e.getSource() == zigZagTimer) {
-			System.out.println("Im a zigzag timer");
+		if (e.getSource() == zigZagTimer && this.isExpired() == false) {
 			if (angle == -1) { // invert angle for zigzag
 				angle = 1;
 				setShipVelocity();
+				this.move();
 			} else if (angle == 1) { // invert angle for zigzag
 				angle = -1;
 				setShipVelocity();
 			}
-			zigZagTimer = new Timer(2000, this);
+			zigZagTimer = new Timer(Constants.ALIEN_ZIGZAG, this);
 			zigZagTimer.start();
 		}
 	}

@@ -3,6 +3,7 @@ package asteroids.game;
 import static asteroids.game.Constants.*;
 import java.awt.*;
 import java.awt.geom.*;
+import java.lang.Math;
 
 
 /**
@@ -328,8 +329,24 @@ public abstract class Participant
         a.intersect(new Area(p.border));
         return !a.isEmpty();
     }
-
+    
     /**
+     * returns direction of Participant p to self
+     */
+    public double getRelativeAngle(Participant p) {
+    	double pX = p.getX();
+    	double pY = p.getY();
+    	
+    	double distanceX = pX - this.getX();
+    	double distanceY = pY - this.getY();
+    	
+    	double angle = Math.atan(distanceY/distanceX);
+    	
+    	return normalize(angle);
+    }
+
+
+	/**
      * Draws this participant
      */
     public void draw (Graphics2D g)
