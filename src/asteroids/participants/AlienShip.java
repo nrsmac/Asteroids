@@ -143,18 +143,10 @@ public class AlienShip extends Ship
 	public void collidedWith(Participant p) {
 
 		if (p instanceof Bullet && ((Bullet) p).isAlienBullet == true) {
-			if (size == 1)
-				controller.genDebris(getX(), getY(), "alienship");
-			else
-				controller.genDebris(getX(), getY(), "alienshipsmall");
 			controller.alienDestroyed(this);
 			Participant.expire(this);
 		}
-		if (p instanceof Ship) {
-			if (size == 1)
-				controller.genDebris(getX(), getY(), "alienship");
-			else
-				controller.genDebris(getX(), getY(), "alienshipsmall");
+		if (p instanceof ShipDestroyer) {
 			controller.alienDestroyed(this);
 			Participant.expire(this);
 		}

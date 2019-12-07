@@ -492,6 +492,11 @@ public class Controller
 		if (alien.getSize() == 0) {
 			saucerSmall.stop();
 		}
+		
+		if (alien.size == 1)
+			genDebris(alien.getX(), alien.getY(), "alienship");
+		else
+			genDebris(alien.getX(), alien.getY(), "alienshipsmall");
 
 	}
 
@@ -642,7 +647,7 @@ public class Controller
 			// Clear the transition time
 			transitionTime = Long.MAX_VALUE;
 			
-			placeShip();
+			placeShip(); 
 			// If there are no lives left, the game is over. Show the final
 			// screen.
 			if (lives <= 0) {
